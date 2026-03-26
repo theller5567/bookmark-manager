@@ -1,0 +1,37 @@
+.bookmarks__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.bookmarks__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.bookmarks__sortby {
+    position: relative;
+}
+
+
+
+.sortby__dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: 10;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    background: hsl(var(--clr-neutral-600));
+    border: 1px solid hsl(var(--clr-neutral-500));
+    border-radius: var(--br-8);
+    box-shadow: 0 12px 24px rgb(0 0 0 / 0.24);
+}
+.sortby__dropdown button {
+    font-family: "Manrope", sans-serif;
+    font-size: 0.875rem;
+    line-height: 150%;
+    letter-spacing: var(--ls-0);
+}

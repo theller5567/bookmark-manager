@@ -1,0 +1,32 @@
+.sidebar__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--header-height);
+    flex-direction: column;
+}
+
+.sidebar__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar__tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    
+    
+}
+
+.sidebar__tags ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    scrollbar-color: hsl(var(--clr-neutral-800)) hsl(var(--clr-neutral-600));
+    scrollbar-width: thin;
+    overflow-y: auto;
+    flex-grow: 1;
+    scrollbar-gutter: stable;
+}

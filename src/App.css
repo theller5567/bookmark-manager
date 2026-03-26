@@ -1,0 +1,512 @@
+/* ========== CSS Reset ========== */
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body, h1, h2, h3, h4, p,
+figure, blockquote, dl, dd {
+  margin-block-end: 0;
+}
+
+h1, h2, h3, h4, p {
+  margin-block-start: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1, h2, h3, h4,
+button, input, label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+  text-decoration: none;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input, button,
+textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+
+label[data-att="required"]:after{
+  position: relative;
+  content: '*';
+  padding-left: 5px;
+  color: hsl(var(--clr--neutral-100));
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+
+/* remove animations for people who've turned them off */
+@media (prefers-reduced-motion: reduce) {  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* added line */
+  border: 0;
+}  
+  
+/* ========== Font Imports ========== */
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope/Manrope-VariableFont_wght.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manrope-semibold";
+  src: url("./assets/fonts/Manrope/static/Manrope-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Manrope-bold";
+  src: url("./assets/fonts/Manrope/static/Manrope-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  /* ========== Letter Spacing ========== */
+  --ls-0: 0px;
+  --ls-025: 2px;
+  --ls-050: 4px;
+  --ls-075: 6px;
+  --ls-100: 8px;
+  --ls-125: 10px;
+  --ls-150: 12px;
+  --ls-200: 16px;
+  --ls-250: 20px;
+  --ls-300: 24px;
+  --ls-400: 32px;
+  --ls-500: 40px;
+  --ls-600: 48px;
+  --ls-800: 64px;
+  --ls-1000: 80px;
+  --ls-1200: 96px;
+  --ls-1400: 112px;
+  --ls-1600: 128px;
+  --ls-1800: 140px;
+
+  /* ========== Colors ========== */
+  --clr-neutral-900: 170, 62%, 5%;
+  --clr-neutral-800: 165, 10%, 33%;
+  --clr-neutral-500: 165, 6%, 56%;
+  --clr-neutral-400: 165, 13%, 78%;
+  --clr-neutral-300: 165, 21%, 89%;
+  --clr-neutral-100: 165, 21%, 93%;
+  --clr-neutral-0: 0, 0%, 100%;
+  --clr-teal-700: 178, 97%, 14%;
+  --clr-teal-800: 178, 97%, 12%;
+  --clr-red-600: 2, 98%, 62%;
+  --clr-red-800: 2, 96%, 41%;
+
+  /* ========== Border-Radius ========== */
+  --br-0: 0px;
+  --br-4: 4px;
+  --br-6: 6px;
+  --br-8: 8px;
+  --br-10: 10px;
+  --br-12: 12px;
+  --br-16: 16px;
+  --br-20: 20px;
+  --br-24: 24px;
+  --br-full: 9999px;
+
+  /* ========== Layout ========== */
+  --sidebar-width: 296px;
+  --header-height: 80px;
+
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-neutral-900: 180, 100%, 4%;
+    --clr-neutral-800: 180, 100%, 6%;
+    --clr-neutral-600: 179, 100%, 9%;
+    --clr-neutral-500: 179, 100%, 13%;
+    --clr-neutral-400: 178, 100%, 14%;
+    --clr-neutral-300: 178, 100%, 22%;
+    --clr-neutral-100: 180, 5%, 71%;
+    --clr-neutral-0: 0, 0%, 100%;
+  }
+}
+/* ********* Style Utilities ********* */
+.tx-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+  gap: var(--gap, 1rem);
+}
+
+.flex.flex-center {
+  align-items: center;
+}
+
+.flex.flex-start {
+  align-items: flex-start;
+}
+
+.flex.flex-end {
+  align-items: flex-end;
+}
+
+.flex.flex-between-justify {
+  justify-content: space-between;
+}
+
+.flex.flex-around-justify {
+  justify-content: space-around;
+}
+
+.flex.flex-evenly-justify {
+  justify-content: space-evenly;
+}
+
+.flex.flex-center-justify {
+  justify-content: center;
+  gap: 2rem;
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap, 1rem);
+}
+
+.flow > *:where(:not(:first-child)) {
+  margin-top: var(--flow-space, 1rem);
+}
+
+/* ========== Colors ========== */
+.clr-900 {
+  color: hsl(var(--clr-neutral-900));
+}
+.clr-800 {
+  color: hsl(var(--clr-neutral-800));
+}
+.clr-500 {
+  color: hsl(var(--clr-neutral-500));
+}
+.clr-400 {
+  color: hsl(var(--clr-neutral-400));
+}
+.clr-300 {
+  color: hsl(var(--clr-neutral-300));
+}
+.clr-100 {
+  color: hsl(var(--clr-neutral-100));
+}
+.clr-0 {
+  color: hsl(var(--clr-neutral-0));
+}
+.clr-teal-700 {
+  color: hsl(var(--clr-teal-700));
+}
+.clr-teal-800 {
+  color: hsl(var(--clr-teal-800));
+}
+.clr-red-600 {
+  color: hsl(var(--clr-red-600));
+}
+.clr-red-800 {
+  color: hsl(var(--clr-red-800));
+}
+
+/* ========== Fonts ========== */
+.fh-1 {
+  font-family: "Manrope-bold", sans-serif;
+  font-size: 1.5rem;
+  line-height: 140%;
+  letter-spacing: var(--ls-0);
+}
+
+.fh-2 {
+  font-family: "Manrope-bold", sans-serif;
+  font-size: 1.25rem;
+  line-height: 120%;
+  letter-spacing: var(--ls-0);
+}
+
+.fh-2-sb {
+  font-family: "Manrope-semibold", sans-serif;
+  font-size: 1rem;
+  line-height: 120%;
+  letter-spacing: var(--ls-0);
+}
+
+.fh-3-sb {
+  font-family: "Manrope-semibold", sans-serif;
+  font-size: 1rem;
+  line-height: 140%;
+  letter-spacing: var(--ls-0);
+}
+
+.fh-3 {
+  font-family: "Manrope", sans-serif;
+  font-size: 1rem;
+  line-height: 130%;
+  letter-spacing: var(--ls-0);
+}
+
+.fh-4-sb {
+  font-family: "Manrope-semibold", sans-serif;
+  font-size: 0.875rem;
+  line-height: 140%;
+  letter-spacing: var(--ls-0);
+}
+
+.fh-4 {
+  font-family: "Manrope", sans-serif;
+  font-size: 0.875rem;
+  line-height: 150%;
+  letter-spacing: var(--ls-0);
+}
+
+.fh-5 {
+  font-family: "Manrope-semibold", sans-serif;
+  font-size: 0.75rem;
+  line-height: 140%;
+  letter-spacing: var(--ls-0);
+}
+
+
+
+/* ********* Layout ********* */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Manrope", sans-serif;
+  background: hsl(var(--clr-neutral-900));
+  color: hsl(var(--clr-neutral-0));
+  min-height: 100dvh;
+}
+
+body.sidebar-open {
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.home-container {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+}
+.home-container.sidebar-open::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 800;
+}
+@media (min-width: 768px) {
+  .home-container {
+    flex-direction: row;
+  }
+}
+
+.right-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    background: hsl(var(--clr-neutral-800));
+    gap: 1rem;
+    flex-shrink: 0;
+    overflow-y: auto;
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    border-right: 1px solid hsl(var(--clr-neutral-500));
+    padding-inline: 1rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-color: hsl(var(--clr-neutral-500)) transparent;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+
+}
+@media (prefers-color-scheme: light) {
+  .sidebar {
+    background: hsl(var(--clr-neutral-0));
+    color: black;
+  }
+}
+
+  
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    inset: 0  auto 0 0;
+    width: min(80vw, 320px);
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    z-index: 900;
+    background: hsl(var(--clr-neutral-800));
+    
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+header {
+  position: sticky;
+  top: 0;
+  height: var(--header-height);
+  max-height: 100px;
+  background: hsl(var(--clr-neutral-800));
+  border-bottom: 1px solid hsl(var(--clr-neutral-500));
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+main {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: var(--bg-dark);
+}
+
+.bookmarks-grid {
+  display: grid;
+  margin-block: 1rem;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(338px, 1fr));
+}
+
+
+
+/* ********* Signin / Signup / ResetPassword ********* */
+main#signin, main#signup {
+  display: grid;
+  place-items:center;
+  height: 100dvh;
+}
+
+.form-container {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-evenly;
+  width: 100%;
+  max-width: 448px;
+  background: hsl(var(--clr-neutral-800));
+  padding: 40px 32px;
+  border-radius: var(--br-12);
+  border: 1px solid hsl(var(--clr-neutral-500));
+}
+
+.form-header {
+  padding-block: 32px;
+}
+
+#login-form, #signup-form, #addBookmark  {
+  display:flex;
+  flex-direction: column;
+  gap:1rem;
+  width: 100%;
+  padding-block-end: 32px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+.input-container input {
+  min-width: 100%;
+}
+
+.form-container p {
+  padding-block-end: 1rem;
+}
+.form-container p span {
+  padding-inline-start: 0.5rem;
+}
+
+#login-form button, #signup-form button {
+  text-align: center !important;
+}
+
