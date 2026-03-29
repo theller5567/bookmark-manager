@@ -11,6 +11,17 @@
     flex-direction: column;
     gap: 0.5rem;
 }
+button.minimal {
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    padding-block-end: 3px;
+    border-radius: var(--br-0);
+    border-bottom: 1px solid hsl(var(--clr-neutral-500));
+}
 
 .sidebar__tags {
     display: flex;
@@ -28,5 +39,4 @@
     scrollbar-width: thin;
     overflow-y: auto;
     flex-grow: 1;
-    scrollbar-gutter: stable;
 }

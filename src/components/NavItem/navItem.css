@@ -46,3 +46,7 @@
     background: hsl(var(--clr-neutral-600));
 }
 
+.nav-item.active.checkbox {
+    background: hsl(var(--clr-neutral-900));
+}
+

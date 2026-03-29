@@ -7,15 +7,18 @@ import IconTime from '../../assets/images/icon-time.svg?react'
 import IconCalender from '../../assets/images/icon-calender.svg?react'
 import IconPin from '../../assets/images/icon-pin.svg?react'
 import type { Bookmark } from "../../types/bookmark";
+import type { DialogAction } from "../DialogModal/DialogModal";
 import {formatDate} from "../../utils/formatDate";
 import { resolveFavicon } from "../../utils/resolveFavicon";
 
 type BookmarkCardProps = {
   bookmarkData: Bookmark,
-  archiveBookmark: (id:string) => void
+  openDialogModal: (bookmark: Bookmark, action: DialogAction) => void,
+  togglePinnedBookmark: (id:string) => void
+  addViewCount: (id:string) => void
 }
 
-const BookmarkCard = ({ bookmarkData, archiveBookmark }: BookmarkCardProps) => {
+const BookmarkCard = ({ bookmarkData, openDialogModal, togglePinnedBookmark, addViewCount }: BookmarkCardProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -56,10 +59,13 @@ const BookmarkCard = ({ bookmarkData, archiveBookmark }: BookmarkCardProps) => {
     } catch (err) {
       console.error('Failed to copy text: ', err);
     }
+    setIsMenuOpen(false);
   };
 
-  const handleVisit = (urlToVisit:string) => {
+  const handleVisit = (id:string, urlToVisit:string) => {
     window.open(urlToVisit, '_blank', 'noopener,noreferrer');
+    addViewCount(id);
+    setIsMenuOpen(false);
   }
 
   const handleAction = (action: string) => {
@@ -67,8 +73,14 @@ const BookmarkCard = ({ bookmarkData, archiveBookmark }: BookmarkCardProps) => {
     setIsMenuOpen(false);
   };
 
-  const handleArchive = (id:string) => {
-    archiveBookmark(id)
+  const requestDialogAction = (action: DialogAction) => {
+    openDialogModal(bookmarkData, action)
+    setIsMenuOpen(false);
+  }
+
+  const togglePinned = (id:string) => {
+    togglePinnedBookmark(id);
+    setIsMenuOpen(false);
   }
 
   return (
@@ -96,11 +108,17 @@ const BookmarkCard = ({ bookmarkData, archiveBookmark }: BookmarkCardProps) => {
                 {isMenuOpen && (
                     <FocusTrap>
                     <div className="bookmark-card__dropdown" id={menuId} role="menu" ref={menuRef}>
-                        <Button name="Visit" icon="visit" variant="tertiary" onClick={() => handleVisit(bookmarkData.url)} />
+                        <Button name="Visit" icon="visit" variant="tertiary" onClick={() => handleVisit(bookmarkData.id, bookmarkData.url)} />
                         <Button name="Copy URL" icon="copy" variant="tertiary" onClick={() => handleCopy(bookmarkData.url)} />
-                        <Button name="Unpin" icon="unpin" variant="tertiary" onClick={() => handleAction('Unpin')} />
+                        {bookmarkData.pinned ? <Button name="Unpin" icon="unpin" variant="tertiary" onClick={() => togglePinned(bookmarkData.id)} />
+                        : <Button name="Pin" icon="pin" variant="tertiary" onClick={() => togglePinned(bookmarkData.id)} />}
                         <Button name="Edit" icon="edit" variant="tertiary" onClick={() => handleAction('Edit')} />
-                        <Button name="Archive" icon="archive" variant="tertiary" onClick={() => handleArchive(bookmarkData.id)} />
+                        {bookmarkData.isArchived ? (
+                          <Button name="Unarchive" icon="archive" variant="tertiary" onClick={() => requestDialogAction('Unarchive')} />
+                        ) : (
+                          <Button name="Archive" icon="archive" variant="tertiary" onClick={() => requestDialogAction('Archive')} />
+                        )}
+                        <Button name="Delete" variant="tertiary" onClick={() => requestDialogAction('Delete')} />
                     </div>
                    </FocusTrap>
                 )}
@@ -121,7 +139,7 @@ const BookmarkCard = ({ bookmarkData, archiveBookmark }: BookmarkCardProps) => {
                 <div className="footer-item ff-5"><IconTime /><span>{formatDate(bookmarkData.createdAt)}</span></div>
                 <div className="footer-item ff-5"><IconCalender /><span>{formatDate(bookmarkData.lastVisited)}</span></div>
             </div>
-            <div className="pin"><IconPin /></div>
+            {bookmarkData.pinned && <div className="pin"><IconPin /></div>}
         </div>
     </div>
   )

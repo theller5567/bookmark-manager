@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
 import { useState } from "react"
 import InputField from "../Inputs/InputField";
-import Button from "../Buttons/Button";
 import IconClose from "../../assets/images/icon-close.svg?react"
 import type { NewBookmark } from '../../types/bookmark'
 import "./addBookmark.css"
@@ -59,7 +58,7 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
 
   return (
     <motion.div
-      className="add-bookmark-modal"
+      className="add-bookmark-modal dialog-modal"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -138,23 +137,7 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
               required
             />
           </div>
-          <div className="cta-group">
-            <Button
-              name="Cancel"
-              variant="secondary"
-              size="large"
-              textAlign="center"
-              type="button"
-              onClick={onClose}
-            />
-            <Button
-              name="Add Bookmark"
-              variant="primary"
-              size="large"
-              textAlign="center"
-              type="submit"
-            />
-          </div>
+          
         </form>
       </motion.div>
     </motion.div>

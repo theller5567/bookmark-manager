@@ -335,6 +335,13 @@ label[data-att="required"]:after{
   letter-spacing: var(--ls-0);
 }
 
+.fh-5-b {
+  font-family: "Manrope-bold", sans-serif;
+  font-size: 0.75rem;
+  line-height: 140%;
+  letter-spacing: var(--ls-0);
+}
+
 
 
 /* ********* Layout ********* */

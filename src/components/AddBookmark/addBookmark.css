@@ -1,4 +1,4 @@
-.add-bookmark-modal {
+.dialog-modal {
     position: fixed;
     display: grid;
     place-items:center;
@@ -7,7 +7,7 @@
     z-index: 9999;
     
   }
-  .add-bookmark-modal:before {
+  .dialog-modal:before {
     position: absolute;
     content: '';
     width: 100%;
@@ -16,7 +16,7 @@
     z-index: -1;
     backdrop-filter: blur(5px);
   }
-  .add-bookmark-modal .form-container {
+  .dialog-modal .form-container {
     position: relative;
     max-width: 570px;
     width: min(570px, calc(100vw - 2rem));
@@ -49,7 +49,7 @@
     outline-offset: 1px;
   }
 
-  .add-bookmark-modal .form-header {
+  .dialog-modal .form-header {
     display: flex;
     flex-direction: column;
     padding-block: 0;

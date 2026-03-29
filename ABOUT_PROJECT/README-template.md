@@ -33,12 +33,12 @@ Users should be able to:
 - Reset tag filters to view all bookmarks again
 - View archived bookmarks
 - Archive bookmarks to remove them from the main view without deleting them
-- Pin/unpin bookmarks to keep important ones easily accessible
-- Edit existing bookmarks to update their details
+- **Pin/unpin bookmarks to keep important ones easily accessible**
+- **Edit existing bookmarks to update their details**
 - Copy bookmark URLs to the clipboard
 - Visit bookmarked websites directly from the app
 - Sort bookmarks by "Recently added", "Recently visited", or "Most visited"
-- Toggle between light and dark color themes
+- **Toggle between light and dark color themes**
 - View the optimal layout for the interface depending on their device's screen size
 - See hover and focus states for all interactive elements on the page
 

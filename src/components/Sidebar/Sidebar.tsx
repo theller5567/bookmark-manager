@@ -13,10 +13,11 @@ type SidebarProps = {
   currentMode: BookmarkPageMode,
   tagData: TagData[],
   selectedTags: string[],
+  clearTags:() => void,
   onTagSelectionChange: (name: string, checked: boolean) => void
 }
 
-const Sidebar = ({ currentMode, tagData, selectedTags, onTagSelectionChange }: SidebarProps) => {
+const Sidebar = ({ currentMode, tagData, selectedTags, clearTags, onTagSelectionChange }: SidebarProps) => {
   return (
     <aside className="sidebar">
         <div className="sidebar__header">
@@ -29,7 +30,9 @@ const Sidebar = ({ currentMode, tagData, selectedTags, onTagSelectionChange }: S
           <NavItem name={'Archive'} icon={'archive'} active={currentMode === 'archived'} to="/archived" />
         </div>
         <div className="sidebar__tags">
-          <p>TAGS</p>
+          <div className="flex flex-between-justify flex-start">
+          <p className="fh-5-b clr-100">TAGS</p><button className="minimal fh-5 clr-100" onClick={clearTags}>Reset</button>
+          </div>
           <ul>
             {tagData.map(({ tag, count }) => (
             <li key={tag}><NavItem

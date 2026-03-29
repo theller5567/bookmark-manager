@@ -2,18 +2,21 @@ import { useState, useEffect, useId, useRef } from "react";
 import BookmarkCard from "../BookmarkCard/BookmarkCard";
 import Button from "../Buttons/Button";
 import type { Bookmark } from "../../types/bookmark";
+import type { DialogAction } from "../DialogModal/DialogModal";
 import "./bookmarks.css";
 
-type SortOption = 'recently-added' | 'recently-visited' | 'most-visited';
+type SortOption = 'default' | 'recently-added' | 'recently-visited' | 'most-visited';
 
 type BookmarkProps = {
   title: string,
   bookmarks: Bookmark[],
   sortOption: SortOption,
-  archiveBookmark: (id:string) => void,
+  openDialogModal: (bookmark: Bookmark, action: DialogAction) => void,
+  togglePinnedBookmark: (id:string) => void,
+  addViewCount: (id:string) => void,
   setSortOption: (option: SortOption) => void
 }
-const Bookmarks = ({title, bookmarks, sortOption, setSortOption, archiveBookmark}:BookmarkProps) => {
+const Bookmarks = ({title, bookmarks, sortOption, setSortOption, openDialogModal, togglePinnedBookmark, addViewCount}:BookmarkProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -65,6 +68,14 @@ const Bookmarks = ({title, bookmarks, sortOption, setSortOption, archiveBookmark
           {isMenuOpen && (
               <div className="sortby__dropdown" id={menuId} role="menu" ref={menuRef}>
                   <Button
+                    name="Default"
+                    icon="check"
+                    iconHidden={sortOption !== 'default'}
+                    iconPosition="right"
+                    variant="tertiary"
+                    onClick={() => handleSortSelect('default')}
+                  />
+                  <Button
                     name="Recently added"
                     icon="check"
                     iconHidden={sortOption !== 'recently-added'}
@@ -94,7 +105,13 @@ const Bookmarks = ({title, bookmarks, sortOption, setSortOption, archiveBookmark
       </div>
       <div className="bookmarks-grid">
         {bookmarks.map((bookmark) => (
-          <BookmarkCard key={bookmark.id} bookmarkData={bookmark} archiveBookmark={archiveBookmark} />
+          <BookmarkCard
+            key={bookmark.id}
+            bookmarkData={bookmark}
+            openDialogModal={openDialogModal}
+            addViewCount={addViewCount}
+            togglePinnedBookmark={togglePinnedBookmark}
+          />
         ))}
       </div>
     </div>
