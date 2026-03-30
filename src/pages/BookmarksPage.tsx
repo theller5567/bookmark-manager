@@ -2,11 +2,12 @@ import { useMemo, useState, type Dispatch, type SetStateAction } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'motion/react'
 import AddBookmark from '../components/AddBookmark/AddBookmark'
+import EditBookmark from '../components/EditBookmark/EditBookmark'
 import Bookmarks from '../components/Bookmarks/Bookmarks'
 import DialogModal, { type DialogAction } from '../components/DialogModal/DialogModal'
 import Header from '../components/Header/Header'
 import Sidebar from '../components/Sidebar/Sidebar'
-import { createBookmark } from '../api/bookmarkApi'
+import { createBookmark, editBookmark } from '../api/bookmarkApi'
 import type { Bookmark, NewBookmark } from '../types/bookmark'
 import { useDebounce } from '../utils/useDebounce'
 
@@ -35,6 +36,8 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [isAddBookmarkOpen, setIsAddBookmarkOpen] = useState(false)
+  const [isEditBookmarkOpen, setIsEditBookmarkOpen] = useState(false)
+  const [editingBookmark, setEditingBookmark] = useState<Bookmark | null>(null)
   const [dialogState, setDialogState] = useState<DialogState | null>(null)
   const debouncedSearchQuery = useDebounce({ value: searchQuery, delay: 300 })
 
@@ -133,9 +136,36 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
     setIsAddBookmarkOpen(false)
   }
 
+  const openEditBookmarkModal = () => {
+    setIsEditBookmarkOpen(true)
+  }
+
+  const closeEditBookmarkModal = () => {
+    setIsEditBookmarkOpen(false)
+    setEditingBookmark(null)
+  }
+
+  const getEditingBookmark = (bookmark:Bookmark) => {
+    setEditingBookmark(bookmark)
+    openEditBookmarkModal()
+  }
+
   const handleCreateBookmark = (newBookmark: NewBookmark) => {
     const bookmark = createBookmark(newBookmark)
     setBookmarks((currentBookmarks) => [bookmark, ...currentBookmarks])
+  }
+
+  const handleEditBookmark = (editedBookmark: Bookmark) => {
+    const bookmark = editBookmark(editedBookmark)
+
+    setBookmarks((currentBookmarks) => {
+        const newBookmarks = currentBookmarks.filter((bookmark) => {
+            if(bookmark.id !== editedBookmark.id){
+                return bookmark;
+            }
+        })
+       return [bookmark, ...newBookmarks]
+    })
   }
 
   const archiveBookmark = (id: string) => {
@@ -239,6 +269,13 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
     <>
       <AnimatePresence>
         {isAddBookmarkOpen && <AddBookmark onClose={closeAddBookmarkModal} createBookmark={handleCreateBookmark} />}
+        {isEditBookmarkOpen && editingBookmark && (
+          <EditBookmark
+            onClose={closeEditBookmarkModal}
+            editBookmark={handleEditBookmark}
+            editingBookmark={editingBookmark}
+          />
+        )}
         {dialogState && (
           <DialogModal
             action={dialogState.action}
@@ -272,6 +309,7 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
               togglePinnedBookmark={togglePinnedBookmark}
               addViewCount={addViewCount}
               setSortOption={setSortOption}
+              getEditingBookmark={getEditingBookmark}
               sortOption={sortOption}
             />
           </main>

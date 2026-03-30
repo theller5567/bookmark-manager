@@ -12,11 +12,12 @@ type BookmarkProps = {
   bookmarks: Bookmark[],
   sortOption: SortOption,
   openDialogModal: (bookmark: Bookmark, action: DialogAction) => void,
+  getEditingBookmark: (bookmark: Bookmark) => void,
   togglePinnedBookmark: (id:string) => void,
   addViewCount: (id:string) => void,
   setSortOption: (option: SortOption) => void
 }
-const Bookmarks = ({title, bookmarks, sortOption, setSortOption, openDialogModal, togglePinnedBookmark, addViewCount}:BookmarkProps) => {
+const Bookmarks = ({title, bookmarks, sortOption, setSortOption, openDialogModal, getEditingBookmark, togglePinnedBookmark, addViewCount}:BookmarkProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -111,6 +112,7 @@ const Bookmarks = ({title, bookmarks, sortOption, setSortOption, openDialogModal
             openDialogModal={openDialogModal}
             addViewCount={addViewCount}
             togglePinnedBookmark={togglePinnedBookmark}
+            getEditingBookmark={getEditingBookmark}
           />
         ))}
       </div>

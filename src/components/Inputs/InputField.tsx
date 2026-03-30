@@ -6,6 +6,8 @@ type inputProps = {
     id?: string,
     name?: string,
     ariaLabel?: string,
+    ariaDescribedby?: string,
+    ariaInvalid?: boolean,
     placeholder?: string,
     value?: string,
     checked?: boolean,
@@ -13,25 +15,33 @@ type inputProps = {
     onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
 }
 
-const InputField = ({type, id, name, ariaLabel, placeholder, value, checked, required, onChange}: inputProps) => {
+const InputField = ({type, id, name, ariaLabel, ariaDescribedby, ariaInvalid, placeholder, value, checked, required, onChange}: inputProps) => {
   
+  const renderTextareaChar = () => {
+    if(type !== 'textarea'){
+      return
+    }
+    const charLength = value?.split('').length;
+    return charLength;
+  }
+
   const renderInput = () => {
     switch (type) {
       case 'search':
         return (<div className="search-input">
                 <IconSearch className="search-icon" />
-                <input id={id} name={name} type="text" placeholder={placeholder ?? "Search by title..."} aria-label={ariaLabel} value={value} onChange={onChange} required={required} />
+                <input id={id} name={name} type="text" placeholder={placeholder ?? "Search by title..."} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} />
               </div>);
       case 'checkbox':
-        return (<input id={id} name={name} type="checkbox" aria-label={ariaLabel} checked={checked} onChange={onChange} required={required} />);
+        return (<input id={id} name={name} type="checkbox" aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} checked={checked} onChange={onChange} required={required} />);
       case 'text':
-        return (<input id={id} name={name} type="text" placeholder={placeholder} aria-label={ariaLabel} value={value} onChange={onChange} required={required} />);
+        return (<input id={id} name={name} type="text" placeholder={placeholder} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} />);
       case 'textarea':
-        return (<textarea id={id} name={name} placeholder={placeholder} aria-label={ariaLabel} value={value} onChange={onChange} required={required} />)
+        return (<><textarea id={id} name={name} placeholder={placeholder} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} /><span className="charlength fh-5 clr-100">{renderTextareaChar()}/280</span></>)
       case 'email':
-        return (<input id={id} name={name} type="email" placeholder={placeholder} aria-label={ariaLabel} value={value} onChange={onChange} required={required} />)
+        return (<input id={id} name={name} type="email" placeholder={placeholder} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} />)
       case 'password':
-        return (<input id={id} name={name} type="password" placeholder={placeholder} aria-label={ariaLabel} value={value} onChange={onChange} required={required} />)
+        return (<input id={id} name={name} type="password" placeholder={placeholder} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} />)
       default:
         console.error(`Unsupported input type: ${type}`);
     }

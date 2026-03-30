@@ -12,6 +12,12 @@ export const createBookmark = (bookmark: NewBookmark): Bookmark => {
   }
 }
 
+export const editBookmark = (bookmark: Bookmark): Bookmark => {
+  return {
+    ...bookmark
+  }
+}
+
 export const deleteBookmark = (_id:string) => {
     
 }

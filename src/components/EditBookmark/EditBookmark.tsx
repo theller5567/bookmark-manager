@@ -2,20 +2,22 @@ import { motion } from "motion/react";
 import { useState } from "react"
 import InputField from "../Inputs/InputField";
 import IconClose from "../../assets/images/icon-close.svg?react"
-import type { NewBookmark } from '../../types/bookmark'
+import Button from "../Buttons/Button"
+import type { Bookmark } from '../../types/bookmark'
 import { type BookmarkFormErrors, validateBookmarkData } from "../../utils/validateBookmarkData";
-import "./addBookmark.css"
+import "../AddBookmark/addBookmark.css"
 
-type AddBookmarkProps = {
-  onClose: () => void
-  createBookmark: (newBookmark: NewBookmark) => void
+type EditBookmarkProps = {
+  onClose: () => void,
+  editBookmark: (bookmark: Bookmark) => void,
+  editingBookmark: Bookmark
 }
 
-const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [website, setWebsite] = useState("");
-    const [tags, setTags] = useState("");
+const EditBookmark = ({ onClose, editBookmark, editingBookmark }: EditBookmarkProps) => {
+    const [title, setTitle] = useState(editingBookmark.title);
+    const [description, setDescription] = useState(editingBookmark.description);
+    const [website, setWebsite] = useState(editingBookmark.url);
+    const [tags, setTags] = useState(editingBookmark.tags.join(", "));
     const [errors, setErrors] = useState<BookmarkFormErrors>({});
 
     const normalizeWebsiteUrl = (value: string) => {
@@ -33,7 +35,7 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
         }
     };
 
-    const addBookmarkAction = (event: React.FormEvent<HTMLFormElement>) => {
+    const editBookmarkAction = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const nextErrors = validateBookmarkData({
           title,
@@ -48,26 +50,23 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
         }
 
         setErrors({});
-        const timestamp = Date.now();
-        const dateObject = new Date(timestamp);
-        const createdDate = dateObject.toLocaleString();
         const normalizedWebsite = normalizeWebsiteUrl(website);
         const faviconUrl = `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(normalizedWebsite)}&sz=64`;
-
-        const newBookmark: NewBookmark = {
+        const newBookmark: Bookmark = {
+            id: editingBookmark.id,
             title,
             url: normalizedWebsite,
             favicon: faviconUrl,
             description,
             tags: tags.split(',').map((tag) => tag.trim()).filter(Boolean),
-            pinned: false,
-            isArchived: false,
-            createdAt: createdDate,
-            lastVisited: null,
-            visitCount: 0
+            pinned: editingBookmark.pinned,
+            isArchived: editingBookmark.isArchived,
+            createdAt: editingBookmark.createdAt,
+            lastVisited: editingBookmark.lastVisited,
+            visitCount: editingBookmark.visitCount
 
         }
-        createBookmark(newBookmark)
+        editBookmark(newBookmark)
         onClose();
     }
 
@@ -91,12 +90,11 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
         <button className="close-modal" type="button" aria-label="Close add bookmark modal" onClick={onClose}>
           <IconClose aria-hidden="true" />
         </button>
-        <form id="addBookmark" onSubmit={addBookmarkAction}>
+        <form id="addBookmark" onSubmit={editBookmarkAction}>
           <div className="form-header">
-            <h1 className="fh-1">Add bookmark</h1>
+            <h1 className="fh-1">Edit bookmark</h1>
             <h2 className="fh-4 clr-100">
-              Save a link with details to keep your collection organized. We
-              extract the favicon automatically from the URL.
+            Update your saved link details — change the title, description, URL, or tags anytime.
             </h2>
           </div>
           <div className="input-container">
@@ -109,14 +107,14 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
               name="title"
               value={title}
               ariaInvalid={Boolean(errors.title)}
-              ariaDescribedby={errors.title ? "title-error" : undefined}
+              ariaDescribedby={errors.title ? "edit-title-error" : undefined}
               onChange={(event) => {
                 setTitle(event.target.value)
                 setErrors((currentErrors) => ({ ...currentErrors, title: undefined }))
               }}
               required
             />
-            {errors.title && <p id="title-error" className="input-error fh-5">{errors.title}</p>}
+            {errors.title && <p id="edit-title-error" className="input-error fh-5">{errors.title}</p>}
           </div>
           <div className="input-container">
             <label className="fh-4" htmlFor="description" data-att="required">
@@ -128,14 +126,14 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
               name="description"
               value={description}
               ariaInvalid={Boolean(errors.description)}
-              ariaDescribedby={errors.description ? "description-error" : undefined}
+              ariaDescribedby={errors.description ? "edit-description-error" : undefined}
               onChange={(event) => {
                 setDescription(event.target.value)
                 setErrors((currentErrors) => ({ ...currentErrors, description: undefined }))
               }}
               required
             />
-            {errors.description && <p id="description-error" className="input-error fh-5">{errors.description}</p>}
+            {errors.description && <p id="edit-description-error" className="input-error fh-5">{errors.description}</p>}
           </div>
           <div className="input-container">
             <label className="fh-4" htmlFor="website" data-att="required">
@@ -147,14 +145,14 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
               name="website"
               value={website}
               ariaInvalid={Boolean(errors.url)}
-              ariaDescribedby={errors.url ? "website-error" : undefined}
+              ariaDescribedby={errors.url ? "edit-website-error" : undefined}
               onChange={(event) => {
                 setWebsite(event.target.value)
                 setErrors((currentErrors) => ({ ...currentErrors, url: undefined }))
               }}
               required
             />
-            {errors.url && <p id="website-error" className="input-error fh-5">{errors.url}</p>}
+            {errors.url && <p id="edit-website-error" className="input-error fh-5">{errors.url}</p>}
           </div>
           <div className="input-container">
             <label className="fh-4" htmlFor="tags" data-att="required">
@@ -167,20 +165,37 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
               value={tags}
               placeholder="e.g. Design, Learning, Tools"
               ariaInvalid={Boolean(errors.tags)}
-              ariaDescribedby={errors.tags ? "tags-error" : undefined}
+              ariaDescribedby={errors.tags ? "edit-tags-error" : undefined}
               onChange={(event) => {
                 setTags(event.target.value)
                 setErrors((currentErrors) => ({ ...currentErrors, tags: undefined }))
               }}
               required
             />
-            {errors.tags && <p id="tags-error" className="input-error fh-5">{errors.tags}</p>}
+            {errors.tags && <p id="edit-tags-error" className="input-error fh-5">{errors.tags}</p>}
           </div>
-          
+          <div className="cta-group">
+            <Button
+              name="Cancel"
+              variant="secondary"
+              size="large"
+              textAlign="center"
+              type="button"
+              onClick={onClose}
+            />
+            <Button
+              name="Update Bookmark"
+              variant="primary"
+              size="large"
+              textAlign="center"
+              type="submit"
+            />
+            
+          </div>
         </form>
       </motion.div>
     </motion.div>
   );
 }
 
-export default AddBookmark
+export default EditBookmark

@@ -15,10 +15,11 @@ type BookmarkCardProps = {
   bookmarkData: Bookmark,
   openDialogModal: (bookmark: Bookmark, action: DialogAction) => void,
   togglePinnedBookmark: (id:string) => void
-  addViewCount: (id:string) => void
+  addViewCount: (id:string) => void,
+  getEditingBookmark: (bookmark: Bookmark) => void
 }
 
-const BookmarkCard = ({ bookmarkData, openDialogModal, togglePinnedBookmark, addViewCount }: BookmarkCardProps) => {
+const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, togglePinnedBookmark, addViewCount }: BookmarkCardProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -68,8 +69,8 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, togglePinnedBookmark, add
     setIsMenuOpen(false);
   }
 
-  const handleAction = (action: string) => {
-    console.log(`${action} clicked for this bookmark card`);
+  const handleAction = (bookmark:Bookmark) => {
+    getEditingBookmark(bookmark);
     setIsMenuOpen(false);
   };
 
@@ -112,7 +113,7 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, togglePinnedBookmark, add
                         <Button name="Copy URL" icon="copy" variant="tertiary" onClick={() => handleCopy(bookmarkData.url)} />
                         {bookmarkData.pinned ? <Button name="Unpin" icon="unpin" variant="tertiary" onClick={() => togglePinned(bookmarkData.id)} />
                         : <Button name="Pin" icon="pin" variant="tertiary" onClick={() => togglePinned(bookmarkData.id)} />}
-                        <Button name="Edit" icon="edit" variant="tertiary" onClick={() => handleAction('Edit')} />
+                        <Button name="Edit" icon="edit" variant="tertiary" onClick={() => handleAction(bookmarkData)} />
                         {bookmarkData.isArchived ? (
                           <Button name="Unarchive" icon="archive" variant="tertiary" onClick={() => requestDialogAction('Unarchive')} />
                         ) : (

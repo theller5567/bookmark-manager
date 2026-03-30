@@ -33,7 +33,7 @@ Users should be able to:
 - Reset tag filters to view all bookmarks again
 - View archived bookmarks
 - Archive bookmarks to remove them from the main view without deleting them
-- **Pin/unpin bookmarks to keep important ones easily accessible**
+- Pin/unpin bookmarks to keep important ones easily accessible
 - **Edit existing bookmarks to update their details**
 - Copy bookmark URLs to the clipboard
 - Visit bookmarked websites directly from the app
