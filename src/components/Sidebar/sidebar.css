@@ -1,6 +1,6 @@
 .sidebar__header {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     min-height: var(--header-height);
     flex-direction: column;

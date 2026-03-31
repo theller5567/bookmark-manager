@@ -9,6 +9,7 @@ import IconEdit from '../../assets/images/icon-edit.svg?react'
 import IconArchive from '../../assets/images/icon-archive.svg?react'
 import IconSort from '../../assets/images/icon-sort.svg?react'
 import IconCheck from '../../assets/images/icon-check.svg?react'
+import IconDelete from '../../assets/images/icon-delete.svg?react'
 
 import './button.css'
 import { clsx } from 'clsx'
@@ -18,7 +19,7 @@ type ButtonProps = {
   size?: 'large',
   iconPosition?: 'left' | 'right',
   iconHidden?: boolean,
-  icon?: 'add' | 'dots-vertical' | 'visit' | 'check' | 'copy' | 'unpin' | 'edit' | 'archive' | 'sort' | 'pin',
+  icon?: 'add' | 'dots-vertical' | 'visit' | 'check' | 'copy' | 'unpin' | 'edit' | 'archive' | 'sort' | 'pin' | 'delete',
   variant?: 'primary' | 'secondary' | 'tertiary',
   ariaLabel?: string,
   textAlign?: 'center' | 'left' | 'right',
@@ -65,6 +66,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ name, size, textAli
       {icon === 'archive' && <IconArchive className="icon" aria-hidden="true" />}
       {icon === 'sort' && <IconSort className="icon" aria-hidden="true" />}
       {icon === 'check' && <IconCheck className="icon" aria-hidden="true" />}
+      {icon === 'delete' && <IconDelete className="icon" aria-hidden="true" />}
       {name && <span>{name}</span>}
     </button>
   )

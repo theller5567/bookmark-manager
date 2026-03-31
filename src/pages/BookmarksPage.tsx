@@ -9,14 +9,15 @@ import Header from '../components/Header/Header'
 import Sidebar from '../components/Sidebar/Sidebar'
 import { createBookmark, editBookmark } from '../api/bookmarkApi'
 import type { Bookmark, NewBookmark } from '../types/bookmark'
+import {
+  filterBookmarks,
+  getTagCounts,
+  toggleSelectedTag,
+  updateBookmarkById,
+  type BookmarkPageMode,
+  type SortOption,
+} from '../utils/bookmarkPage'
 import { useDebounce } from '../utils/useDebounce'
-
-type SortOption = 'default' | 'recently-added' | 'recently-visited' | 'most-visited'
-type BookmarkPageMode = 'active' | 'archived'
-type TagCount = {
-  tag: string
-  count: number
-}
 
 type BookmarksPageProps = {
   mode: BookmarkPageMode
@@ -41,74 +42,19 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
   const [dialogState, setDialogState] = useState<DialogState | null>(null)
   const debouncedSearchQuery = useDebounce({ value: searchQuery, delay: 300 })
 
-  const getLastVisitedTime = (bookmark: Bookmark): number => {
-    return bookmark.lastVisited ? new Date(bookmark.lastVisited).getTime() : 0
-  }
-
-  const sortBookmarks = (nextBookmarks: Bookmark[], nextSortOption: SortOption): Bookmark[] => {
-    switch (nextSortOption) {
-      case 'default':
-        return [...nextBookmarks].sort((a, b) => {
-          if (a.pinned !== b.pinned) {
-            return Number(b.pinned) - Number(a.pinned)
-          }
-
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        })
-      case 'recently-added':
-        return [...nextBookmarks].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-      case 'recently-visited':
-        return [...nextBookmarks].sort((a, b) => getLastVisitedTime(b) - getLastVisitedTime(a))
-      case 'most-visited':
-        return [...nextBookmarks].sort((a, b) => b.visitCount - a.visitCount)
-      default:
-        return nextBookmarks
-    }
-  }
-
-  const isBookmarkVisibleForMode = (bookmark: Bookmark) => {
-    return mode === 'archived' ? bookmark.isArchived === true : bookmark.isArchived !== true
-  }
-
-  const modeBookmarks = useMemo(() => {
-    return bookmarks.filter(isBookmarkVisibleForMode)
-  }, [bookmarks, mode])
-
   const filteredBookmarks = useMemo(() => {
-    const normalizedQuery = debouncedSearchQuery.trim().toLowerCase()
-    const searchedBookmarks = normalizedQuery
-      ? modeBookmarks.filter((bookmark) => {
-          return (
-            bookmark.title.toLowerCase().includes(normalizedQuery) ||
-            bookmark.url.toLowerCase().includes(normalizedQuery) ||
-            bookmark.description.toLowerCase().includes(normalizedQuery) ||
-            bookmark.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery))
-          )
-        })
-      : modeBookmarks
-
-    const tagFilteredBookmarks = selectedTags.length > 0
-      ? searchedBookmarks.filter((bookmark) => {
-          return bookmark.tags.some((tag) => selectedTags.includes(tag))
-        })
-      : searchedBookmarks
-
-    return sortBookmarks(tagFilteredBookmarks, sortOption)
-  }, [debouncedSearchQuery, modeBookmarks, selectedTags, sortOption])
-
-  const tagCounts = useMemo<TagCount[]>(() => {
-    const map = new Map<string, number>()
-
-    modeBookmarks.forEach(({ tags }) => {
-      tags.forEach((tag) => {
-        map.set(tag, (map.get(tag) ?? 0) + 1)
-      })
+    return filterBookmarks({
+      bookmarks,
+      mode,
+      searchQuery: debouncedSearchQuery,
+      selectedTags,
+      sortOption,
     })
+  }, [bookmarks, debouncedSearchQuery, mode, selectedTags, sortOption])
 
-    return Array.from(map.entries())
-      .map(([tag, count]) => ({ tag, count }))
-      .sort((a, b) => b.count - a.count)
-  }, [modeBookmarks])
+  const tagCounts = useMemo(() => {
+    return getTagCounts(bookmarks, mode)
+  }, [bookmarks, mode])
 
   const onSearchChange = (value: string) => {
     setSearchQuery(value)
@@ -116,11 +62,7 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
 
   const onTagSelectionChange = (tagName: string, checked: boolean) => {
     setSelectedTags((currentTags) => {
-      if (checked) {
-        return currentTags.includes(tagName) ? currentTags : [...currentTags, tagName]
-      }
-
-      return currentTags.filter((tag) => tag !== tagName)
+      return toggleSelectedTag(currentTags, tagName, checked)
     })
   }
 
@@ -159,41 +101,28 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
     const bookmark = editBookmark(editedBookmark)
 
     setBookmarks((currentBookmarks) => {
-        const newBookmarks = currentBookmarks.filter((bookmark) => {
-            if(bookmark.id !== editedBookmark.id){
-                return bookmark;
-            }
-        })
-       return [bookmark, ...newBookmarks]
+      return updateBookmarkById(currentBookmarks, bookmark.id, () => bookmark)
     })
   }
 
   const archiveBookmark = (id: string) => {
     setBookmarks((currentBookmarks) => {
-      return currentBookmarks.map((bookmark) => {
-        if (bookmark.id !== id) {
-          return bookmark
-        }
-
+      return updateBookmarkById(currentBookmarks, id, (bookmark) => {
         return {
           ...bookmark,
           isArchived: true,
-        }
+        } 
       })
     })
   }
 
   const unarchiveBookmark = (id: string) => {
     setBookmarks((currentBookmarks) => {
-      return currentBookmarks.map((bookmark) => {
-        if (bookmark.id !== id) {
-          return bookmark
-        }
-
+      return updateBookmarkById(currentBookmarks, id, (bookmark) => {
         return {
           ...bookmark,
           isArchived: false,
-        }
+        } 
       })
     })
   }
@@ -206,33 +135,25 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
 
   const togglePinnedBookmark = (id: string) => {
     setBookmarks((currentBookmarks) => {
-        return currentBookmarks.map((bookmark) => {
-          if (bookmark.id !== id) {
-            return bookmark
-          }
-  
-          return {
-            ...bookmark,
-            pinned: !bookmark.pinned,
-          }
-        })
+      return updateBookmarkById(currentBookmarks, id, (bookmark) => {
+        return {
+          ...bookmark,
+          pinned: !bookmark.pinned,
+        }
       })
+    })
   }
 
   const addViewCount = (id: string) => {
     setBookmarks((currentBookmarks) => {
-        return currentBookmarks.map((bookmark) => {
-          if (bookmark.id !== id) {
-            return bookmark
-          }
-  
-          return {
-            ...bookmark,
-            visitCount: bookmark.visitCount + 1,
-            lastVisited: new Date().toISOString()
-          }
-        })
+      return updateBookmarkById(currentBookmarks, id, (bookmark) => {
+        return {
+          ...bookmark,
+          visitCount: bookmark.visitCount + 1,
+          lastVisited: new Date().toISOString()
+        }
       })
+    })
   }
 
   const pageTitle = mode === 'archived' ? 'Archived bookmarks' : 'All bookmarks'

@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useState } from "react"
 import InputField from "../Inputs/InputField";
+import Button from "../Buttons/Button";
 import IconClose from "../../assets/images/icon-close.svg?react"
 import type { NewBookmark } from '../../types/bookmark'
 import { type BookmarkFormErrors, validateBookmarkData } from "../../utils/validateBookmarkData";
@@ -176,7 +177,24 @@ const AddBookmark = ({ onClose, createBookmark }: AddBookmarkProps) => {
             />
             {errors.tags && <p id="tags-error" className="input-error fh-5">{errors.tags}</p>}
           </div>
-          
+          <div className="cta-group">
+            <Button
+              name="Cancel"
+              variant="secondary"
+              size="large"
+              textAlign="center"
+              type="button"
+              onClick={onClose}
+            />
+            <Button
+              name="Create Bookmark"
+              variant="primary"
+              size="large"
+              textAlign="center"
+              type="submit"
+            />
+            
+          </div>
         </form>
       </motion.div>
     </motion.div>

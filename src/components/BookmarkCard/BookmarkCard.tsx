@@ -119,7 +119,9 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, toggl
                         ) : (
                           <Button name="Archive" icon="archive" variant="tertiary" onClick={() => requestDialogAction('Archive')} />
                         )}
-                        <Button name="Delete" variant="tertiary" onClick={() => requestDialogAction('Delete')} />
+                        {bookmarkData.isArchived &&
+                          <Button name="Delete Permanently" icon="delete" variant="tertiary" onClick={() => requestDialogAction('Delete')} />
+                        }
                     </div>
                    </FocusTrap>
                 )}
