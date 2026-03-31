@@ -7,6 +7,7 @@ import IconUnpin from '../../assets/images/icon-unpin.svg?react'
 import IconPin from '../../assets/images/icon-pin.svg?react'
 import IconEdit from '../../assets/images/icon-edit.svg?react'
 import IconArchive from '../../assets/images/icon-archive.svg?react'
+import IconUnarchive from '../../assets/images/icon-unarchive.svg?react'
 import IconSort from '../../assets/images/icon-sort.svg?react'
 import IconCheck from '../../assets/images/icon-check.svg?react'
 import IconDelete from '../../assets/images/icon-delete.svg?react'
@@ -19,7 +20,7 @@ type ButtonProps = {
   size?: 'large',
   iconPosition?: 'left' | 'right',
   iconHidden?: boolean,
-  icon?: 'add' | 'dots-vertical' | 'visit' | 'check' | 'copy' | 'unpin' | 'edit' | 'archive' | 'sort' | 'pin' | 'delete',
+  icon?: 'add' | 'dots-vertical' | 'visit' | 'check' | 'copy' | 'unpin' | 'edit' | 'archive' | 'unarchive' | 'sort' | 'pin' | 'delete',
   variant?: 'primary' | 'secondary' | 'tertiary',
   ariaLabel?: string,
   textAlign?: 'center' | 'left' | 'right',
@@ -64,6 +65,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ name, size, textAli
       {icon === 'pin' && <IconPin className="icon" aria-hidden="true" />}
       {icon === 'edit' && <IconEdit className="icon" aria-hidden="true" />}
       {icon === 'archive' && <IconArchive className="icon" aria-hidden="true" />}
+      {icon === 'unarchive' && <IconUnarchive className="icon" aria-hidden="true" />}
       {icon === 'sort' && <IconSort className="icon" aria-hidden="true" />}
       {icon === 'check' && <IconCheck className="icon" aria-hidden="true" />}
       {icon === 'delete' && <IconDelete className="icon" aria-hidden="true" />}

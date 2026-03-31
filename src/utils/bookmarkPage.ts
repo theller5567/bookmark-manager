@@ -101,9 +101,45 @@ export const updateBookmarkById = (
   updater: (bookmark: Bookmark) => Bookmark,
 ) => {
   return bookmarks.map((bookmark) => {
-    if (bookmark.id !== id) {
-      return bookmark
-    }
+    if (bookmark.id !== id) return bookmark
     return updater(bookmark)
   })
 }
+
+export const prependBookmark = (bookmarks: Bookmark[], newBookmark: Bookmark) => {
+  return [newBookmark, ...bookmarks]
+}
+
+export const archiveBookmarkById = (bookmarks: Bookmark[], id: string) =>
+  updateBookmarkById(bookmarks, id, (bookmark) => ({
+    ...bookmark,
+    isArchived: true,
+  }))
+
+export const unarchiveBookmarkById = (bookmarks: Bookmark[], id: string) =>
+  updateBookmarkById(bookmarks, id, (bookmark) => ({
+    ...bookmark,
+    isArchived: false,
+  }))
+
+export const togglePinnedBookmarkById = (bookmarks: Bookmark[], id: string) =>
+  updateBookmarkById(bookmarks, id, (bookmark) => ({
+    ...bookmark,
+    pinned: !bookmark.pinned,
+  }))
+
+export const incrementVisitCountById = (bookmarks: Bookmark[], id: string) =>
+  updateBookmarkById(bookmarks, id, (bookmark) => ({
+    ...bookmark,
+    visitCount: bookmark.visitCount + 1,
+    lastVisited: new Date().toISOString(),
+  }))
+
+export const deleteBookmarkById = (bookmarks: Bookmark[], id: string) =>
+  bookmarks.filter((bookmark) => bookmark.id !== id)
+
+export const replaceBookmark = (bookmarks: Bookmark[], editedBookmark: Bookmark) =>
+  bookmarks.map((bookmark) => {
+    if (bookmark.id !== editedBookmark.id) return bookmark
+    return editedBookmark
+  })

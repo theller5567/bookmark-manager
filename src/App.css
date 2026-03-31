@@ -471,7 +471,7 @@ main#signin, main#signup {
   height: 100dvh;
 }
 
-.form-container {
+.form-container, .dialog-modal-container {
   display:flex;
   flex-direction: column;
   justify-content: center;
@@ -488,7 +488,7 @@ main#signin, main#signup {
   padding-block: 32px;
 }
 
-#login-form, #signup-form, #addBookmark  {
+#login-form, #signup-form, #bookmarkForm  {
   display:flex;
   flex-direction: column;
   gap:1rem;

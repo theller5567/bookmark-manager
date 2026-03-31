@@ -16,7 +16,7 @@
     z-index: -1;
     backdrop-filter: blur(5px);
   }
-  .dialog-modal .form-container {
+  .dialog-modal-container {
     position: relative;
     max-width: 570px;
     width: min(570px, calc(100vw - 2rem));

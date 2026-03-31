@@ -7,7 +7,7 @@ export type BookmarkFormValues = {
 
 export type BookmarkFormErrors = Partial<Record<keyof BookmarkFormValues, string>>
 
-const normalizeWebsiteUrl = (value: string) => {
+export const normalizeWebsiteUrl = (value: string) => {
   const trimmedValue = value.trim()
 
   if (!trimmedValue) {

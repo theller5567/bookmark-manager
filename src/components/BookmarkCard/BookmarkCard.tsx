@@ -11,12 +11,20 @@ import type { DialogAction } from "../DialogModal/DialogModal";
 import {formatDate} from "../../utils/formatDate";
 import { resolveFavicon } from "../../utils/resolveFavicon";
 
+type ButtonIcon = 'visit' | 'copy' | 'unpin' | 'edit' | 'archive' | 'pin' | 'unarchive' | 'delete'
+
 type BookmarkCardProps = {
   bookmarkData: Bookmark,
   openDialogModal: (bookmark: Bookmark, action: DialogAction) => void,
   togglePinnedBookmark: (id:string) => void
   addViewCount: (id:string) => void,
   getEditingBookmark: (bookmark: Bookmark) => void
+}
+
+type CardAction = {
+  name: string
+  icon?: ButtonIcon
+  onClick: () => void
 }
 
 const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, togglePinnedBookmark, addViewCount }: BookmarkCardProps) => {
@@ -26,6 +34,53 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, toggl
   const menuId = useId();
   const faviconSrc = resolveFavicon(bookmarkData.favicon);
   const [_isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = async (textToCopy:string) => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setIsCopied(true);
+      console.log('COPIED: ', textToCopy);
+      setTimeout(() => setIsCopied(false), 2000); // Reset "Copied!" message after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleVisit = (id:string, urlToVisit:string) => {
+    window.open(urlToVisit, '_blank', 'noopener,noreferrer');
+    addViewCount(id);
+    setIsMenuOpen(false);
+  }
+
+  const handleEditBookmark = (bookmark:Bookmark) => {
+    getEditingBookmark(bookmark);
+    setIsMenuOpen(false);
+  };
+
+  const requestDialogAction = (action: DialogAction) => {
+    openDialogModal(bookmarkData, action)
+    setIsMenuOpen(false);
+  }
+
+  const togglePinned = (id:string) => {
+    togglePinnedBookmark(id);
+    setIsMenuOpen(false);
+  }
+
+  const actions: CardAction[] = [
+    { name: 'Visit', icon: 'visit', onClick: () => handleVisit(bookmarkData.id, bookmarkData.url) },
+    { name: 'Copy URL', icon: 'copy', onClick: () => handleCopy(bookmarkData.url) },
+    bookmarkData.pinned
+      ? { name: 'Unpin', icon: 'unpin', onClick: () => togglePinned(bookmarkData.id) }
+      : { name: 'Pin', icon: 'pin', onClick: () => togglePinned(bookmarkData.id) },
+    { name: 'Edit', icon: 'edit', onClick: () => handleEditBookmark(bookmarkData) },
+    bookmarkData.isArchived
+      ? { name: 'Unarchive', icon: 'unarchive', onClick: () => requestDialogAction('Unarchive') }
+      : { name: 'Archive', icon: 'archive', onClick: () => requestDialogAction('Archive') },
+    { name: 'Delete', icon: 'delete', onClick: () => requestDialogAction('Delete') },
+  ]
+  
 
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -51,38 +106,7 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, toggl
     };
   }, [isMenuOpen]);
 
-  const handleCopy = async (textToCopy:string) => {
-    try {
-      await navigator.clipboard.writeText(textToCopy);
-      setIsCopied(true);
-      console.log('COPIED: ', textToCopy);
-      setTimeout(() => setIsCopied(false), 2000); // Reset "Copied!" message after 2 seconds
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-    }
-    setIsMenuOpen(false);
-  };
-
-  const handleVisit = (id:string, urlToVisit:string) => {
-    window.open(urlToVisit, '_blank', 'noopener,noreferrer');
-    addViewCount(id);
-    setIsMenuOpen(false);
-  }
-
-  const handleAction = (bookmark:Bookmark) => {
-    getEditingBookmark(bookmark);
-    setIsMenuOpen(false);
-  };
-
-  const requestDialogAction = (action: DialogAction) => {
-    openDialogModal(bookmarkData, action)
-    setIsMenuOpen(false);
-  }
-
-  const togglePinned = (id:string) => {
-    togglePinnedBookmark(id);
-    setIsMenuOpen(false);
-  }
+  
 
   return (
     <div className="bookmark-card">
@@ -109,19 +133,15 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, toggl
                 {isMenuOpen && (
                     <FocusTrap>
                     <div className="bookmark-card__dropdown" id={menuId} role="menu" ref={menuRef}>
-                        <Button name="Visit" icon="visit" variant="tertiary" onClick={() => handleVisit(bookmarkData.id, bookmarkData.url)} />
-                        <Button name="Copy URL" icon="copy" variant="tertiary" onClick={() => handleCopy(bookmarkData.url)} />
-                        {bookmarkData.pinned ? <Button name="Unpin" icon="unpin" variant="tertiary" onClick={() => togglePinned(bookmarkData.id)} />
-                        : <Button name="Pin" icon="pin" variant="tertiary" onClick={() => togglePinned(bookmarkData.id)} />}
-                        <Button name="Edit" icon="edit" variant="tertiary" onClick={() => handleAction(bookmarkData)} />
-                        {bookmarkData.isArchived ? (
-                          <Button name="Unarchive" icon="archive" variant="tertiary" onClick={() => requestDialogAction('Unarchive')} />
-                        ) : (
-                          <Button name="Archive" icon="archive" variant="tertiary" onClick={() => requestDialogAction('Archive')} />
-                        )}
-                        {bookmarkData.isArchived &&
-                          <Button name="Delete Permanently" icon="delete" variant="tertiary" onClick={() => requestDialogAction('Delete')} />
-                        }
+                    {actions.map((action) => (
+                      <Button
+                        key={action.name}
+                        name={action.name}
+                        icon={action.icon}
+                        variant="tertiary"
+                        onClick={action.onClick}
+                      />
+                    ))}
                     </div>
                    </FocusTrap>
                 )}

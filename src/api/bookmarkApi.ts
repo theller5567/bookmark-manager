@@ -1,10 +1,5 @@
 import type { Bookmark, NewBookmark } from '../types/bookmark'
 
-
-export const updateBookmark = (_id:string, _bookmark:Bookmark) => {
-
-}
-
 export const createBookmark = (bookmark: NewBookmark): Bookmark => {
   return {
     id: crypto.randomUUID(),
@@ -12,12 +7,8 @@ export const createBookmark = (bookmark: NewBookmark): Bookmark => {
   }
 }
 
-export const editBookmark = (bookmark: Bookmark): Bookmark => {
+export const updateBookmark = (bookmark: Bookmark): Bookmark => {
   return {
     ...bookmark
   }
-}
-
-export const deleteBookmark = (_id:string) => {
-    
 }
