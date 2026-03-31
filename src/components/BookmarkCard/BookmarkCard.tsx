@@ -117,7 +117,7 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, toggl
                 </div>
                 <div className="bookmark-card__info">
                     <p className="fh-2-sb">{bookmarkData.title}</p>
-                    <p className="fh-5 clr-100">{bookmarkData.url}</p>
+                    <p className="fh-5 bookmark-card__url">{bookmarkData.url}</p>
                 </div>
             </div>
             <div className="bookmark-card__actions">
@@ -148,7 +148,7 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, toggl
             </div>
         </div>
         <div className="bookmark-card__body">
-            <p className="ff-4-sb clr-100">{bookmarkData.description}</p>
+            <p className="ff-4-sb bookmark-card__description">{bookmarkData.description}</p>
             <div className="bookmark-card__tags">
                 {bookmarkData.tags.map((tag:string) => {
                     return <span key={tag} className="ff-5 tag">{tag}</span>

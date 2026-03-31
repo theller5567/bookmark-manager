@@ -5,10 +5,10 @@
     gap: 0.5rem;
     padding: 10px 15px;
     text-decoration: none;
-    color: hsl(var(--clr-neutral-100));
-    background: hsl(var(--clr-neutral-800));
+    color: var(--text-secondary);
+    background: var(--surface-panel);
     border-radius: var(--br-6);
-    border: 1px solid transparent;
+    border: var(--border-transparent);
     font-family: "Manrope", sans-serif;
     font-size: 1rem;
     line-height: 100%;
@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 .nav-item:hover {
-    background: hsl(var(--clr-neutral-600));
+    background: var(--surface-panel-muted);
 }
 
 .nav-item .numbered-count {
@@ -26,9 +26,9 @@
     padding: 2px 8px;
     min-width: 31.33333px;
     aspect-ratio: 1;
-    background: hsl(var(--clr-neutral-600));
-    border: 1px solid hsl(var(--clr-neutral-400));
-    color: hsl(var(--clr-neutral-0));
+    background: var(--surface-panel-muted);
+    border: 1px solid var(--border-default);
+    color: var(--text-primary);
     border-radius: 50%;
     font-family: "Manrope", sans-serif;
     font-size: 12px;
@@ -37,16 +37,15 @@
 }
 
 .nav-item.active {
-    color: hsl(var(--clr-neutral-0));
-    background: hsl(var(--clr-neutral-800));
-    border: 1px solid transparent;
+    color: var(--text-primary);
+    background: var(--surface-panel);
+    border: var(--border-transparent);
 }
 
 .nav-item.active.home-icon, .nav-item.active.archive-icon {
-    background: hsl(var(--clr-neutral-600));
+    background: var(--surface-panel-muted);
 }
 
 .nav-item.active.checkbox {
-    background: hsl(var(--clr-neutral-900));
+    background: var(--surface-page);
 }
-

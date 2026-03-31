@@ -37,7 +37,7 @@ const InputField = ({type, id, name, ariaLabel, ariaDescribedby, ariaInvalid, pl
       case 'text':
         return (<input id={id} name={name} type="text" placeholder={placeholder} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} />);
       case 'textarea':
-        return (<><textarea id={id} name={name} placeholder={placeholder} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} /><span className="charlength fh-5 clr-100">{renderTextareaChar()}/280</span></>)
+        return (<><textarea id={id} name={name} placeholder={placeholder} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} /><span className="charlength input-charlength fh-5">{renderTextareaChar()}/280</span></>)
       case 'email':
         return (<input id={id} name={name} type="email" placeholder={placeholder} aria-label={ariaLabel} aria-describedby={ariaDescribedby} aria-invalid={ariaInvalid} value={value} onChange={onChange} required={required} />)
       case 'password':

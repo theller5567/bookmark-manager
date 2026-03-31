@@ -4,6 +4,7 @@ import IconTheme from '../../assets/images/icon-theme.svg?react'
 import IconLightTheme from '../../assets/images/icon-light-theme.svg?react'
 import IconDarkTheme from '../../assets/images/icon-dark-theme.svg?react'
 import IconLogout from '../../assets/images/icon-logout.svg?react'
+import { useTheme } from '../../context/ThemeContext'
 import './avatar.css'
 
 type AvatarProps = {
@@ -16,7 +17,7 @@ type AvatarProps = {
 const Avatar = ({ avatar, name, email, interactive = false }: AvatarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const { theme, setTheme } = useTheme();
   const menuId = useId();
 
   useEffect(() => {
@@ -41,10 +42,6 @@ const Avatar = ({ avatar, name, email, interactive = false }: AvatarProps) => {
       document.removeEventListener('keydown', handleEscape);
     };
   }, [interactive, isOpen]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-  }
 
   const avatarStyles = clsx(
     'avatar',
@@ -83,8 +80,8 @@ const Avatar = ({ avatar, name, email, interactive = false }: AvatarProps) => {
               <img src={avatar} alt="" className="avatar__image" />
             </div>
             <div className="avatar-dropdown__details">
-              <p className="fh-4 clr-0">{name}</p>
-              <p className="fh-4-sb clr-100">{email}</p>
+              <p className="fh-4 avatar-dropdown__name">{name}</p>
+              <p className="fh-4-sb avatar-dropdown__email">{email}</p>
             </div>
           </div>
 
@@ -94,10 +91,10 @@ const Avatar = ({ avatar, name, email, interactive = false }: AvatarProps) => {
               <span className='fh-4-sb'>Theme</span>
             </div>
             <div className="theme-toggle" aria-label="Theme options">
-              <button type="button" onClick={toggleTheme} className={`${theme === 'light' && 'theme-toggle__button--active'} theme-toggle__button`} aria-label="Light theme">
+              <button type="button" onClick={() => setTheme('light')} className={`${theme === 'light' ? 'theme-toggle__button--active' : ''} theme-toggle__button`} aria-label="Light theme">
                 <IconLightTheme className="icon" aria-hidden="true" />
               </button>
-              <button type="button" onClick={toggleTheme} className={`${theme === 'dark' && 'theme-toggle__button--active'} theme-toggle__button`} aria-label="Dark theme">
+              <button type="button" onClick={() => setTheme('dark')} className={`${theme === 'dark' ? 'theme-toggle__button--active' : ''} theme-toggle__button`} aria-label="Dark theme">
                 <IconDarkTheme className="icon" aria-hidden="true" />
               </button>
             </div>

@@ -44,16 +44,16 @@ Use this as a working cleanup checklist.
 
 ## <span style="color:#f472b6;">CSS Cleanup</span>
 
-- [ ] Consolidate repeated colors into variables
-- [ ] Consolidate repeated spacing into variables
-- [ ] Consolidate repeated borders and shadows into variables
+- [x] Consolidate repeated colors into variables
+- [x] Consolidate repeated spacing into variables
+- [x] Consolidate repeated borders and shadows into variables
 - [ ] Remove repeated font declarations
-- [ ] Normalize focus states across inputs and buttons
-- [ ] Normalize hover states across inputs and buttons
-- [ ] Normalize invalid/error states across inputs and buttons
-- [ ] Review `App.css` for raw repeated values
-- [ ] Review `inputs.css` for dead or overlapping rules
-- [ ] Review modal styles shared by add/edit/dialog flows
+- [x] Normalize focus states across inputs and buttons
+- [x] Normalize hover states across inputs and buttons
+- [x] Normalize invalid/error states across inputs and buttons
+- [x] Review `App.css` for raw repeated values
+- [x] Review `inputs.css` for dead or overlapping rules
+- [x] Review modal styles shared by add/edit/dialog flows
 
 ## <span style="color:#60a5fa;">Architecture</span>
 

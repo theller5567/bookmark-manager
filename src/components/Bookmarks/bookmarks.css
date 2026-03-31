@@ -24,10 +24,10 @@
     flex-direction: column;
     gap: 0.25rem;
     padding: 0.5rem;
-    background: hsl(var(--clr-neutral-600));
-    border: 1px solid hsl(var(--clr-neutral-500));
+    background: var(--surface-panel-muted);
+    border: 1px solid var(--border-subtle);
     border-radius: var(--br-8);
-    box-shadow: 0 12px 24px rgb(0 0 0 / 0.24);
+    box-shadow: var(--shadow-popover);
 }
 .sortby__dropdown button {
     font-family: "Manrope", sans-serif;

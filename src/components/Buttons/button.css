@@ -6,7 +6,7 @@ button {
     font-size: 1rem;
     line-height: 130%;
     letter-spacing: var(--ls-0);
-    padding-inline: 12px;
+    padding-inline: var(--space-xs);
     padding-block: 10px;
     border-radius: var(--br-8);
     cursor: pointer;
@@ -24,29 +24,28 @@ button {
   button.button--primary {
     --main-color: var(--clr-teal-700);
     background: hsl(var(--main-color));
-    color: hsl(var(--clr-neutral-0));
+    color: var(--button-text-primary);
     border: none;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow-button-inset);
   }
   button.button--primary:hover {
     background: hsl(var(--clr-teal-800));
   }
   button.button--primary:focus {
-    outline: 1px solid hsl(var(--clr-neutral-100));
+    outline: 1px solid var(--focus-outline);
     outline-offset: 1px;
   }
   
   button.button--secondary {
-    --main-color: var(--clr-neutral-900);
-    background: hsl(var(--main-color));
-    border: 1px solid hsl(var(--clr-neutral-400));
-    color: hsl(var(--clr-neutral-0));
+    background: var(--surface-button-secondary);
+    border: 1px solid var(--border-default);
+    color: var(--text-primary);
   }
   button.button--secondary:hover {
-    background: hsl(var(--clr-neutral-100));
+    background: var(--surface-button-secondary-hover);
   }
   button.button--secondary:focus {
-    outline: 1px solid hsl(var(--clr-neutral-900));
+    outline: 1px solid var(--focus-outline-dark);
     outline-offset: 1px;
   }
 button.button--secondary:active {
@@ -60,16 +59,16 @@ button.button--tertiary {
   gap: 0.75rem;
   padding: 0.5rem;
   background: transparent;
-  border: 1px solid transparent;
-  color: hsl(var(--clr-neutral-100));
+  border: var(--border-transparent);
+  color: var(--text-secondary);
   border-radius: var(--br-6);
 }
 button.button--tertiary:hover {
-  background: hsl(var(--clr-neutral-500));
+  background: var(--surface-button-tertiary-hover);
 }
 button.button--tertiary:focus {
-  background: hsl(var(--clr-neutral-600));
-  outline: 1px solid hsl(var(--clr-neutral-100));
+  background: var(--surface-button-tertiary-focus);
+  outline: 1px solid var(--focus-outline);
   outline-offset: 1px;
 }
 
@@ -91,16 +90,17 @@ button.button--icon-only {
     justify-content: center;
     align-items: center;
     padding: 6px;
-    background-color: hsl(var(--clr-neutral-800));
-    border: 1px solid hsl(var(--clr-neutral-500));
+    background-color: var(--surface-button-icon);
+    border: 1px solid var(--border-subtle);
+    color: var(--button-text-primary);
 }
 button.button--icon-only:hover {
-    background-color: hsl(var(--clr-neutral-600));
+    background-color: var(--surface-button-icon-hover);
 }
 button.button--icon-only:focus {
-  background-color: hsl(var(--clr-neutral-800));
+  background-color: var(--surface-button-icon);
   border: 1px solid hsl(var(--clr-neutral-600));
-  outline: 1px solid hsl(var(--clr-neutral-100));
+  outline: 1px solid var(--focus-outline);
   outline-offset: 1px;
 }
 .button.button--icon-only svg {

@@ -1,6 +1,8 @@
 import "./sidebar.css";
 import NavItem from "../NavItem/NavItem";
-import Logo from '../../assets/images/logo-dark-theme.svg?react'
+import LogoLight from '../../assets/images/logo-light-theme.svg?react'
+import LogoDark from '../../assets/images/logo-dark-theme.svg?react'
+import { useTheme } from '../../context/ThemeContext'
 
 type BookmarkPageMode = 'active' | 'archived'
 
@@ -18,11 +20,12 @@ type SidebarProps = {
 }
 
 const Sidebar = ({ currentMode, tagData, selectedTags, clearTags, onTagSelectionChange }: SidebarProps) => {
+  const { theme } = useTheme()
   return (
     <aside className="sidebar">
         <div className="sidebar__header">
           <div className="logo">
-            <Logo />
+            {theme === 'dark' ? <LogoDark /> : <LogoLight />}
           </div>
         </div>
         <div className="sidebar__links">
@@ -31,7 +34,7 @@ const Sidebar = ({ currentMode, tagData, selectedTags, clearTags, onTagSelection
         </div>
         <div className="sidebar__tags">
           <div className="flex flex-between-justify flex-start">
-          <p className="fh-5-b clr-100">TAGS</p><button className="minimal fh-5 clr-100" onClick={clearTags}>Reset</button>
+          <p className="fh-5-b sidebar__tags-label">TAGS</p><button className="minimal fh-5 sidebar__reset" onClick={clearTags}>Reset</button>
           </div>
           <ul>
             {tagData.map(({ tag, count }) => (

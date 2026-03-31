@@ -71,8 +71,8 @@ textarea, select {
 label[data-att="required"]:after{
   position: relative;
   content: '*';
-  padding-left: 5px;
-  color: hsl(var(--clr--neutral-100));
+  padding-left: var(--space-2xs);
+  color: var(--text-secondary);
 }
 
 /* Anything that has been anchored to should have extra scroll margin */
@@ -130,8 +130,9 @@ label[data-att="required"]:after{
   font-display: swap;
 }
 
-:root {
-  color-scheme: light dark;
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
   /* ========== Letter Spacing ========== */
   --ls-0: 0px;
   --ls-025: 2px;
@@ -156,10 +157,11 @@ label[data-att="required"]:after{
   /* ========== Colors ========== */
   --clr-neutral-900: 170, 62%, 5%;
   --clr-neutral-800: 165, 10%, 33%;
+  --clr-neutral-600: 179, 100%, 9%;
   --clr-neutral-500: 165, 6%, 56%;
   --clr-neutral-400: 165, 13%, 78%;
   --clr-neutral-300: 165, 21%, 89%;
-  --clr-neutral-100: 165, 21%, 93%;
+  --clr-neutral-100: 168, 21%, 93%;
   --clr-neutral-0: 0, 0%, 100%;
   --clr-teal-700: 178, 97%, 14%;
   --clr-teal-800: 178, 97%, 12%;
@@ -182,19 +184,100 @@ label[data-att="required"]:after{
   --sidebar-width: 296px;
   --header-height: 80px;
 
+  /* ========== Semantic Tokens ========== */
+  --surface-page: hsl(var(--clr-neutral-100));
+  --surface-panel: hsl(var(--clr-neutral-0));
+  --surface-panel-muted: hsl(var(--clr-neutral-100));
+  --surface-field: hsl(var(--clr-neutral-0));
+  --surface-field-hover: hsl(var(--clr-neutral-100));
+  --surface-field-active: hsl(var(--clr-neutral-0));
+  --surface-field-selected: hsl(var(--clr-neutral-0));
+  --surface-button-secondary: hsl(var(--clr-neutral-0));
+  --surface-button-secondary-hover: hsl(var(--clr-neutral-100));
+  --surface-button-tertiary-hover: hsl(var(--clr-neutral-100));
+  --surface-button-tertiary-focus: hsl(var(--clr-neutral-0));
+  --surface-button-icon: hsl(var(--clr-neutral-800));
+  --surface-button-icon-hover: hsl(var(--clr-neutral-600));
+  --surface-pill: hsl(var(--clr-neutral-100));
+  --surface-toggle: hsl(var(--clr-neutral-100));
+  --surface-toggle-button: hsl(var(--clr-neutral-100));
+  --surface-toggle-button-active: hsl(var(--clr-neutral-0));
+  --surface-action-hover: hsl(var(--clr-neutral-700));
+  --surface-sidebar-scrollbar: hsl(var(--clr-neutral-100));
+  --surface-overlay: rgba(0, 0, 0, 0.8);
+
+  --border-default: hsl(var(--clr-neutral-400));
+  --border-subtle: hsl(var(--clr-neutral-100));
+  --border-strong: hsl(var(--clr-neutral-300));
+  --border-transparent: 1px solid transparent;
+
+  --text-primary: hsl(var(--clr-neutral-800));
+  --button-text-primary: hsl(var(--clr-neutral-0));
+  --text-secondary: hsl(var(--clr-neutral-800));
+  --text-inverse: hsl(var(--clr-neutral-0));
+  --text-danger: hsl(var(--clr-red-600));
+
+  --focus-outline: hsl(var(--clr-neutral-100));
+  --focus-outline-dark: hsl(var(--clr-neutral-900));
+  --focus-ring: 0 0 0 2px black;
+  --focus-ring-checkbox: 0 0 0 1px hsl(var(--clr-neutral-900)), 0 0 0 2px hsl(var(--clr-neutral-100));
+  --focus-ring-strong: 2px solid hsl(var(--clr-neutral-100));
+
+  --shadow-popover: 0 12px 24px rgb(0 0 0 / 0.24);
+  --shadow-popover-strong: 0 16px 40px rgb(0 0 0 / 0.28);
+  --shadow-button-inset: inset 0 1px 1px rgba(0, 0, 0, 0.3);
+  
+  --modal-blur: blur(5px);
+  --space-2xs: 5px;
+  --space-3xs: 2px;
+  --space-xs: 12px;
+  --space-sm-plus: 1.25rem;
+  --space-sm: 1rem;
+  --space-md: 32px;
+  --space-lg: 2rem;
+
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --clr-neutral-900: 180, 100%, 4%;
-    --clr-neutral-800: 180, 100%, 6%;
-    --clr-neutral-600: 179, 100%, 9%;
-    --clr-neutral-500: 179, 100%, 13%;
-    --clr-neutral-400: 178, 100%, 14%;
-    --clr-neutral-300: 178, 100%, 22%;
-    --clr-neutral-100: 180, 5%, 71%;
-    --clr-neutral-0: 0, 0%, 100%;
-  }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --surface-page: hsl(180 100% 4%);
+  --surface-panel: hsl(180 100% 6%);
+  --surface-panel-muted: hsl(179 100% 9%);
+  --surface-field: hsl(179 100% 9%);
+  --surface-field-hover: hsl(179 100% 13%);
+  --surface-field-active: hsl(179 100% 13%);
+  --surface-field-selected: hsl(179 100% 13%);
+  --surface-button-secondary: hsl(180 100% 4%);
+  --surface-button-secondary-hover: hsl(179 100% 9%);
+  --surface-button-tertiary-hover: hsl(179 100% 13%);
+  --surface-button-tertiary-focus: hsl(179 100% 9%);
+  --surface-button-icon: hsl(180 100% 6%);
+  --surface-button-icon-hover: hsl(179 100% 9%);
+  --surface-pill: hsl(179 100% 9%);
+  --surface-toggle: hsl(179 100% 13%);
+  --surface-toggle-button: hsl(179 100% 9%);
+  --surface-toggle-button-active: hsl(179 100% 13%);
+  --surface-action-hover: hsl(179 100% 13%);
+  --surface-sidebar-scrollbar: hsl(179 100% 13%);
+  --surface-overlay: rgba(0, 0, 0, 0.8);
+
+  --border-default: hsl(178 100% 14%);
+  --border-subtle: hsl(179 100% 13%);
+  --border-strong: hsl(178 100% 22%);
+
+  --text-primary: hsl(0 0% 100%);
+  --button-text-primary: hsl(0 0% 100%);
+  --text-secondary: hsl(180 5% 71%);
+  --text-inverse: hsl(180 100% 4%);
+
+  --focus-outline: hsl(180 5% 71%);
+  --focus-outline-dark: hsl(0 0% 100%);
+  --focus-ring: 0 0 0 2px hsl(180 100% 4%);
+  --focus-ring-checkbox: 0 0 0 1px hsl(180 100% 4%), 0 0 0 2px hsl(180 5% 71%);
+  --focus-ring-strong: 2px solid hsl(180 5% 71%);
 }
+
 /* ********* Style Utilities ********* */
 .tx-center {
   text-align: center;
@@ -231,7 +314,7 @@ label[data-att="required"]:after{
 
 .flex.flex-center-justify {
   justify-content: center;
-  gap: 2rem;
+  gap: var(--space-lg);
 }
 
 .grid {
@@ -241,41 +324,6 @@ label[data-att="required"]:after{
 
 .flow > *:where(:not(:first-child)) {
   margin-top: var(--flow-space, 1rem);
-}
-
-/* ========== Colors ========== */
-.clr-900 {
-  color: hsl(var(--clr-neutral-900));
-}
-.clr-800 {
-  color: hsl(var(--clr-neutral-800));
-}
-.clr-500 {
-  color: hsl(var(--clr-neutral-500));
-}
-.clr-400 {
-  color: hsl(var(--clr-neutral-400));
-}
-.clr-300 {
-  color: hsl(var(--clr-neutral-300));
-}
-.clr-100 {
-  color: hsl(var(--clr-neutral-100));
-}
-.clr-0 {
-  color: hsl(var(--clr-neutral-0));
-}
-.clr-teal-700 {
-  color: hsl(var(--clr-teal-700));
-}
-.clr-teal-800 {
-  color: hsl(var(--clr-teal-800));
-}
-.clr-red-600 {
-  color: hsl(var(--clr-red-600));
-}
-.clr-red-800 {
-  color: hsl(var(--clr-red-800));
 }
 
 /* ========== Fonts ========== */
@@ -350,8 +398,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Manrope", sans-serif;
-  background: hsl(var(--clr-neutral-900));
-  color: hsl(var(--clr-neutral-0));
+  background: var(--surface-page);
+  color: var(--text-primary);
   min-height: 100dvh;
 }
 
@@ -373,7 +421,7 @@ body.sidebar-open {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: var(--surface-overlay);
   z-index: 800;
 }
 @media (min-width: 768px) {
@@ -393,30 +441,22 @@ body.sidebar-open {
     display: flex;
     flex-direction: column;
     width: var(--sidebar-width);
-    background: hsl(var(--clr-neutral-800));
-    gap: 1rem;
+    background: var(--surface-panel);
+    gap: var(--space-sm);
     flex-shrink: 0;
     overflow-y: auto;
-    padding: 0 1rem;
+    padding: 0 var(--space-sm);
     position: sticky;
     top: 0;
     height: 100dvh;
-    border-right: 1px solid hsl(var(--clr-neutral-500));
-    padding-inline: 1rem;
+    border-right: 1px solid var(--border-subtle);
+    padding-inline: var(--space-sm);
     -webkit-overflow-scrolling: touch;
-    scrollbar-color: hsl(var(--clr-neutral-500)) transparent;
+    scrollbar-color: var(--surface-sidebar-scrollbar) transparent;
     scrollbar-width: thin;
     scrollbar-gutter: stable;
 
 }
-@media (prefers-color-scheme: light) {
-  .sidebar {
-    background: hsl(var(--clr-neutral-0));
-    color: black;
-  }
-}
-
-  
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;
@@ -425,7 +465,7 @@ body.sidebar-open {
     transform: translateX(-100%);
     transition: transform 0.28s ease;
     z-index: 900;
-    background: hsl(var(--clr-neutral-800));
+    background: var(--surface-panel);
     
   }
   .sidebar.open {
@@ -438,12 +478,12 @@ header {
   top: 0;
   height: var(--header-height);
   max-height: 100px;
-  background: hsl(var(--clr-neutral-800));
-  border-bottom: 1px solid hsl(var(--clr-neutral-500));
+  background: var(--surface-panel);
+  border-bottom: 1px solid var(--border-subtle);
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-sm);
   flex-shrink: 0;
   z-index: 10;
 }
@@ -457,8 +497,8 @@ main {
 
 .bookmarks-grid {
   display: grid;
-  margin-block: 1rem;
-  gap: 1rem;
+  margin-block: var(--space-sm);
+  gap: var(--space-sm);
   grid-template-columns: repeat(auto-fit, minmax(338px, 1fr))
 }
 
@@ -471,6 +511,18 @@ main#signin, main#signup {
   height: 100dvh;
 }
 
+main#signin .auth-form__subtitle,
+main#signup .auth-form__subtitle,
+main#signin .auth-form__helper,
+main#signup .auth-form__helper {
+  color: var(--text-secondary);
+}
+
+main#signin .auth-form__helper-link,
+main#signup .auth-form__helper-link {
+  color: var(--text-primary);
+}
+
 .form-container, .dialog-modal-container {
   display:flex;
   flex-direction: column;
@@ -478,10 +530,10 @@ main#signin, main#signup {
   align-items: space-evenly;
   width: 100%;
   max-width: 448px;
-  background: hsl(var(--clr-neutral-800));
+  background: var(--surface-panel);
   padding: 40px 32px;
   border-radius: var(--br-12);
-  border: 1px solid hsl(var(--clr-neutral-500));
+  border: 1px solid var(--border-subtle);
 }
 
 .form-header {
@@ -491,7 +543,7 @@ main#signin, main#signup {
 #login-form, #signup-form, #bookmarkForm  {
   display:flex;
   flex-direction: column;
-  gap:1rem;
+  gap: var(--space-sm);
   width: 100%;
   padding-block-end: 32px;
 }
@@ -499,7 +551,7 @@ main#signin, main#signup {
 .input-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: calc(var(--space-xs) / 2);
   width: 100%;
 }
 .input-container input {
@@ -510,10 +562,9 @@ main#signin, main#signup {
   padding-block-end: 1rem;
 }
 .form-container p span {
-  padding-inline-start: 0.5rem;
+  padding-inline-start: calc(var(--space-xs) / 2);
 }
 
 #login-form button, #signup-form button {
   text-align: center !important;
 }
-

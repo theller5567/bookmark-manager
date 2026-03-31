@@ -46,7 +46,7 @@ const Signup = () => {
         <form id="signup-form" onSubmit={signupAction}>
           <div className="form-header">
           <h1 className="fh-1">Create your account</h1>
-          <h2 className="fh-4 clr-100">Join us and start saving your favorite links — organized, searchable, and always within reach.</h2>
+          <h2 className="fh-4 auth-form__subtitle">Join us and start saving your favorite links — organized, searchable, and always within reach.</h2>
           </div>
           <div className="input-container">
             <label className="fh-4" htmlFor="name">Full name</label>
@@ -63,7 +63,7 @@ const Signup = () => {
           <Button name="Create account" variant="primary" size="large" textAlign="center" type="submit" />
         </form>
 
-        <p className="fh-4 clr-100 tx-center">Already have an account? <span className="fh-4-sb clr-0"><Link to="/signin">Log in</Link></span></p>
+        <p className="fh-4 auth-form__helper tx-center">Already have an account? <span className="fh-4-sb auth-form__helper-link"><Link to="/signin">Log in</Link></span></p>
       </div>
     </main>
   )

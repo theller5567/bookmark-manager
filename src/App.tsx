@@ -9,23 +9,26 @@ import Signin from './pages/Signin'
 import Signup from './pages/Signup'
 import bookmarkData from './constants/data.json'
 import type { Bookmark } from './types/bookmark'
+import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(bookmarkData.bookmarks)
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
-        <Route path="/home" element={<Home bookmarks={bookmarks} setBookmarks={setBookmarks} />} />
-        <Route path="/archived" element={<Archived bookmarks={bookmarks} setBookmarks={setBookmarks} />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="*" element={<Navigate to="/home" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/home" element={<Home bookmarks={bookmarks} setBookmarks={setBookmarks} />} />
+          <Route path="/archived" element={<Archived bookmarks={bookmarks} setBookmarks={setBookmarks} />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="*" element={<Navigate to="/home" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

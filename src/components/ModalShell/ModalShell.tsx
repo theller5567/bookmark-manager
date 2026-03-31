@@ -38,7 +38,7 @@ const ModalShell = ({onClose, title, description, children}:ModalShellProps) => 
         </button>
         <div className="form-header">
             <h1 className="fh-1">{title}</h1>
-            <h2 className="fh-4 clr-100">
+            <h2 className="fh-4 modal-shell__description">
             {description}
             </h2>
         </div>

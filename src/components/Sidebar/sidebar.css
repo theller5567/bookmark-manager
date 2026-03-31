@@ -20,7 +20,7 @@ button.minimal {
     padding: 0;
     padding-block-end: 3px;
     border-radius: var(--br-0);
-    border-bottom: 1px solid hsl(var(--clr-neutral-500));
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .sidebar__tags {
@@ -35,8 +35,13 @@ button.minimal {
     list-style: none;
     margin: 0;
     padding: 0;
-    scrollbar-color: hsl(var(--clr-neutral-800)) hsl(var(--clr-neutral-600));
+    scrollbar-color: var(--surface-panel) var(--surface-panel-muted);
     scrollbar-width: thin;
     overflow-y: auto;
     flex-grow: 1;
+}
+
+.sidebar__tags-label,
+.sidebar__reset {
+    color: var(--text-secondary);
 }
