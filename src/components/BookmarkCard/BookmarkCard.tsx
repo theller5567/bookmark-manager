@@ -138,7 +138,7 @@ const BookmarkCard = ({ bookmarkData, openDialogModal, getEditingBookmark, toggl
                         key={action.name}
                         name={action.name}
                         icon={action.icon}
-                        variant="tertiary"
+                        variant="active"
                         onClick={action.onClick}
                       />
                     ))}

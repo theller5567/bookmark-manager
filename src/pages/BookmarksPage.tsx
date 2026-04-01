@@ -4,10 +4,11 @@ import { AnimatePresence } from 'motion/react'
 import AddBookmark from '../components/AddBookmark/AddBookmark'
 import EditBookmark from '../components/EditBookmark/EditBookmark'
 import Bookmarks from '../components/Bookmarks/Bookmarks'
+import Toast from '../components/Toast/Toast'
 import DialogModal from '../components/DialogModal/DialogModal'
 import Header from '../components/Header/Header'
 import Sidebar from '../components/Sidebar/Sidebar'
-import type { Bookmark } from '../types/bookmark'
+import type { Bookmark, NewBookmark } from '../types/bookmark'
 import { useBookmarkActions } from '../hooks/useBookmarkActions'
 import { useBookmarkModals } from '../hooks/useBookmarkModals'
 import {
@@ -44,10 +45,13 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
   } = useBookmarkActions({ setBookmarks })
 
   const {
+    isToastOpen,
     isAddBookmarkOpen,
     isEditBookmarkOpen,
     editingBookmark,
     dialogState,
+    openToastNotification,
+    closeToastNotification,
     openAddBookmarkModal,
     closeAddBookmarkModal,
     openEditBookmarkModal,
@@ -86,7 +90,14 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
   }
 
   const clearTags = () => {
+    openToastNotification()
     setSelectedTags([])
+  }
+
+  const createBookmarkAndToast = (newBookmark: NewBookmark) => {
+    handleCreateBookmark(newBookmark)
+    closeAddBookmarkModal()
+    openToastNotification()
   }
 
   const pageTitle = mode === 'archived' ? 'Archived bookmarks' : 'All bookmarks'
@@ -94,7 +105,8 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
   return (
     <>
       <AnimatePresence>
-        {isAddBookmarkOpen && <AddBookmark onClose={closeAddBookmarkModal} createBookmark={handleCreateBookmark} />}
+        {isToastOpen && <Toast  onClose={closeToastNotification}/>}
+        {isAddBookmarkOpen && <AddBookmark onClose={closeAddBookmarkModal} createBookmark={createBookmarkAndToast} />}
         {isEditBookmarkOpen && editingBookmark && (
           <EditBookmark
             onClose={closeEditBookmarkModal}

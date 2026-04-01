@@ -141,8 +141,19 @@
     border: 0;
     color: var(--text-secondary);
     cursor: pointer;
+    border-radius: var(--br-0);
+}
+
+.avatar-dropdown__action a {
+    color: var(--text-secondary);
+    text-decoration: none;
 }
 
 .avatar-dropdown__action:hover {
     background: var(--surface-action-hover);
+    color: var(--text-primary);
+}
+
+.avatar-dropdown__action:hover a {
+    color: var(--text-primary);
 }

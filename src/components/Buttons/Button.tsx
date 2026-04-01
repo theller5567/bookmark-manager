@@ -3,6 +3,7 @@ import IconAdd from '../../assets/images/icon-add.svg?react'
 import IconDotsVertical from '../../assets/images/icon-dots-vertical.svg?react'
 import IconVisit from '../../assets/images/icon-visit.svg?react'
 import IconCopy from '../../assets/images/icon-copy.svg?react'
+import IconClose from '../../assets/images/icon-close.svg?react'
 import IconUnpin from '../../assets/images/icon-unpin.svg?react'
 import IconPin from '../../assets/images/icon-pin.svg?react'
 import IconEdit from '../../assets/images/icon-edit.svg?react'
@@ -20,8 +21,8 @@ type ButtonProps = {
   size?: 'large',
   iconPosition?: 'left' | 'right',
   iconHidden?: boolean,
-  icon?: 'add' | 'dots-vertical' | 'visit' | 'check' | 'copy' | 'unpin' | 'edit' | 'archive' | 'unarchive' | 'sort' | 'pin' | 'delete',
-  variant?: 'primary' | 'secondary' | 'tertiary',
+  icon?: 'add' | 'dots-vertical' | 'visit' | 'check' | 'close' | 'copy' | 'unpin' | 'edit' | 'archive' | 'unarchive' | 'sort' | 'pin' | 'delete',
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'active',
   ariaLabel?: string,
   textAlign?: 'center' | 'left' | 'right',
   dropdown?: boolean,
@@ -29,12 +30,14 @@ type ButtonProps = {
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'],
   ariaExpanded?: boolean,
   ariaHaspopup?: ButtonHTMLAttributes<HTMLButtonElement>['aria-haspopup'],
-  ariaControls?: string
+  ariaControls?: string,
+  style?: string
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ name, size, textAlign, icon, iconHidden, iconPosition, variant, ariaLabel, onClick, type = 'button', ariaExpanded, ariaHaspopup, ariaControls }, ref) => {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ style, name, size, textAlign, icon, iconHidden, iconPosition, variant, ariaLabel, onClick, type = 'button', ariaExpanded, ariaHaspopup, ariaControls }, ref) => {
   const styles = clsx(
     'button',
+    style,
     size === 'large' && 'button--large',
     icon,
     icon && !name && 'button--icon-only',
@@ -43,6 +46,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ name, size, textAli
     variant === 'primary' && 'button--primary',
     variant === 'secondary' && 'button--secondary',
     variant === 'tertiary' && 'button--tertiary',
+    variant === 'active' && 'button--active',
     textAlign === 'center' && 'text-align-center',
     textAlign === 'right' && 'text-align-right'
   );
@@ -69,6 +73,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ name, size, textAli
       {icon === 'sort' && <IconSort className="icon" aria-hidden="true" />}
       {icon === 'check' && <IconCheck className="icon" aria-hidden="true" />}
       {icon === 'delete' && <IconDelete className="icon" aria-hidden="true" />}
+      {icon === 'close' && <IconClose className="icon" aria-hidden="true" />}
       {name && <span>{name}</span>}
     </button>
   )

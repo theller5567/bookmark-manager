@@ -157,6 +157,7 @@ label[data-att="required"]:after{
   /* ========== Colors ========== */
   --clr-neutral-900: 170, 62%, 5%;
   --clr-neutral-800: 165, 10%, 33%;
+  --clr-neutral-700: 165, 8%, 44%;
   --clr-neutral-600: 179, 100%, 9%;
   --clr-neutral-500: 165, 6%, 56%;
   --clr-neutral-400: 165, 13%, 78%;
@@ -196,6 +197,8 @@ label[data-att="required"]:after{
   --surface-button-secondary-hover: hsl(var(--clr-neutral-100));
   --surface-button-tertiary-hover: hsl(var(--clr-neutral-100));
   --surface-button-tertiary-focus: hsl(var(--clr-neutral-0));
+  --surface-button-active-hover: hsl(var(--clr-neutral-300));
+  --surface-button-active-focus: hsl(var(--clr-neutral-600));
   --surface-button-icon: hsl(var(--clr-neutral-800));
   --surface-button-icon-hover: hsl(var(--clr-neutral-600));
   --surface-pill: hsl(var(--clr-neutral-100));
@@ -221,11 +224,17 @@ label[data-att="required"]:after{
   --focus-outline-dark: hsl(var(--clr-neutral-900));
   --focus-ring: 0 0 0 2px black;
   --focus-ring-checkbox: 0 0 0 1px hsl(var(--clr-neutral-900)), 0 0 0 2px hsl(var(--clr-neutral-100));
-  --focus-ring-strong: 2px solid hsl(var(--clr-neutral-100));
+  --focus-ring-strong: 2px solid hsl(var(--clr-teal-700));
+
+  --button-icon-only-focus-ring: hsl(var(--clr-teal-700));
+  --button-icon-only-border: hsl(var(--clr-neutral-100));
 
   --shadow-popover: 0 12px 24px rgb(0 0 0 / 0.24);
   --shadow-popover-strong: 0 16px 40px rgb(0 0 0 / 0.28);
   --shadow-button-inset: inset 0 1px 1px rgba(0, 0, 0, 0.3);
+
+  --toast-surface: hsl(var(--clr-neutral-0));
+  --toast-border: hsl(var(--clr-neutral-100));
   
   --modal-blur: blur(5px);
   --space-2xs: 5px;
@@ -241,41 +250,59 @@ label[data-att="required"]:after{
 :root[data-theme="dark"] {
   color-scheme: dark;
 
-  --surface-page: hsl(180 100% 4%);
-  --surface-panel: hsl(180 100% 6%);
-  --surface-panel-muted: hsl(179 100% 9%);
-  --surface-field: hsl(179 100% 9%);
-  --surface-field-hover: hsl(179 100% 13%);
-  --surface-field-active: hsl(179 100% 13%);
-  --surface-field-selected: hsl(179 100% 13%);
-  --surface-button-secondary: hsl(180 100% 4%);
-  --surface-button-secondary-hover: hsl(179 100% 9%);
-  --surface-button-tertiary-hover: hsl(179 100% 13%);
-  --surface-button-tertiary-focus: hsl(179 100% 9%);
-  --surface-button-icon: hsl(180 100% 6%);
-  --surface-button-icon-hover: hsl(179 100% 9%);
-  --surface-pill: hsl(179 100% 9%);
-  --surface-toggle: hsl(179 100% 13%);
-  --surface-toggle-button: hsl(179 100% 9%);
-  --surface-toggle-button-active: hsl(179 100% 13%);
-  --surface-action-hover: hsl(179 100% 13%);
-  --surface-sidebar-scrollbar: hsl(179 100% 13%);
+  --clr-neutral-900: 180, 100%, 4%;
+  --clr-neutral-800: 180, 100%, 6%;
+  --clr-neutral-700: 179, 100%, 13%;
+  --clr-neutral-600: 179, 100%, 9%;
+  --clr-neutral-500: 179, 100%, 13%;
+  --clr-neutral-400: 178, 100%, 14%;
+  --clr-neutral-300: 178, 100%, 22%;
+  --clr-neutral-100: 180, 5%, 71%;
+  --clr-neutral-0: 0, 0%, 100%;
+
+  --surface-page: hsl(var(--clr-neutral-900));
+  --surface-panel: hsl(var(--clr-neutral-800));
+  --surface-panel-muted: hsl(var(--clr-neutral-600));
+  --surface-field: hsl(var(--clr-neutral-600));
+  --surface-field-hover: hsl(var(--clr-neutral-500));
+  --surface-field-active: hsl(var(--clr-neutral-500));
+  --surface-field-selected: hsl(var(--clr-neutral-500));
+  --surface-button-secondary: hsl(var(--clr-neutral-900));
+  --surface-button-secondary-hover: hsl(var(--clr-neutral-600));
+  --surface-button-tertiary-hover: hsl(var(--clr-neutral-500));
+  --surface-button-tertiary-focus: hsl(var(--clr-neutral-600));
+  --surface-button-active-hover: hsl(var(--clr-neutral-500));
+  --surface-button-active-focus: hsl(var(--clr-neutral-600));
+  --surface-button-icon: hsl(var(--clr-neutral-800));
+  --surface-button-icon-hover: hsl(var(--clr-neutral-600));
+  --surface-pill: hsl(var(--clr-neutral-600));
+  --surface-toggle: hsl(var(--clr-neutral-500));
+  --surface-toggle-button: hsl(var(--clr-neutral-500));
+  --surface-toggle-button-active: hsl(var(--clr-neutral-600));
+  --surface-action-hover: hsl(var(--clr-neutral-700));
+  --surface-sidebar-scrollbar: hsl(var(--clr-neutral-500));
   --surface-overlay: rgba(0, 0, 0, 0.8);
 
-  --border-default: hsl(178 100% 14%);
-  --border-subtle: hsl(179 100% 13%);
-  --border-strong: hsl(178 100% 22%);
+  --border-default: hsl(var(--clr-neutral-400));
+  --border-subtle: hsl(var(--clr-neutral-500));
+  --border-strong: hsl(var(--clr-neutral-300));
 
-  --text-primary: hsl(0 0% 100%);
-  --button-text-primary: hsl(0 0% 100%);
-  --text-secondary: hsl(180 5% 71%);
-  --text-inverse: hsl(180 100% 4%);
+  --text-primary: hsl(var(--clr-neutral-0));
+  --button-text-primary: hsl(var(--clr-neutral-0));
+  --text-secondary: hsl(var(--clr-neutral-100));
+  --text-inverse: hsl(var(--clr-neutral-900));
 
-  --focus-outline: hsl(180 5% 71%);
-  --focus-outline-dark: hsl(0 0% 100%);
-  --focus-ring: 0 0 0 2px hsl(180 100% 4%);
-  --focus-ring-checkbox: 0 0 0 1px hsl(180 100% 4%), 0 0 0 2px hsl(180 5% 71%);
-  --focus-ring-strong: 2px solid hsl(180 5% 71%);
+  --focus-outline: hsl(var(--clr-neutral-100));
+  --focus-outline-dark: hsl(var(--clr-neutral-0));
+  --focus-ring: 0 0 0 2px hsl(var(--clr-neutral-900));
+  --focus-ring-checkbox: 0 0 0 1px hsl(var(--clr-neutral-900)), 0 0 0 2px hsl(var(--clr-neutral-100));
+  --focus-ring-strong: 2px solid hsl(var(--clr-neutral-100));
+
+  --button-icon-only-focus-ring: hsl(var(--clr-neutral-100));
+  --button-icon-only-border: hsl(var(--clr-neutral-300));
+
+  --toast-surface: hsl(var(--clr-neutral-500));
+  --toast-border: hsl(var(--clr-neutral-400));
 }
 
 /* ********* Style Utilities ********* */
@@ -490,7 +517,7 @@ header {
 
 main {
   flex: 1;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
   overflow-y: auto;
   background: var(--bg-dark);
 }

@@ -58,7 +58,8 @@ const Bookmarks = ({title, bookmarks, sortOption, setSortOption, openDialogModal
         <span className="bookmarks__sortby">
           <Button 
           ref={triggerRef}
-          variant="primary" 
+          style="sort-button"
+          variant="tertiary" 
           icon="sort"
           dropdown 
           name="Sort by"

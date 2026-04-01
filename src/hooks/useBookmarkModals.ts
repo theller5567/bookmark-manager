@@ -20,8 +20,20 @@ export const useBookmarkModals = ({
 }: UseBookmarkModalsProps) => {
   const [isAddBookmarkOpen, setIsAddBookmarkOpen] = useState(false)
   const [isEditBookmarkOpen, setIsEditBookmarkOpen] = useState(false)
+  const [isToastOpen, setIsToastOpen] = useState(false)
   const [editingBookmark, setEditingBookmark] = useState<Bookmark | null>(null)
   const [dialogState, setDialogState] = useState<DialogState | null>(null)
+
+  const openToastNotification = () => {
+    setIsToastOpen(true)
+    setTimeout(() => {
+      setIsToastOpen(false)
+    }, 5000)
+  }
+
+  const closeToastNotification = () => {
+    setIsToastOpen(false)
+  }
 
   const openAddBookmarkModal = () => {
     setIsAddBookmarkOpen(true)
@@ -70,10 +82,13 @@ export const useBookmarkModals = ({
   }
 
   return {
+    isToastOpen,
     isAddBookmarkOpen,
     isEditBookmarkOpen,
     editingBookmark,
     dialogState,
+    openToastNotification,
+    closeToastNotification,
     openAddBookmarkModal,
     closeAddBookmarkModal,
     openEditBookmarkModal,

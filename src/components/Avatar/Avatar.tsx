@@ -6,6 +6,7 @@ import IconDarkTheme from '../../assets/images/icon-dark-theme.svg?react'
 import IconLogout from '../../assets/images/icon-logout.svg?react'
 import { useTheme } from '../../context/ThemeContext'
 import './avatar.css'
+import { Link } from 'react-router-dom'
 
 type AvatarProps = {
   avatar: string,
@@ -49,6 +50,9 @@ const Avatar = ({ avatar, name, email, interactive = false }: AvatarProps) => {
     isOpen && 'avatar--expanded'
   );
 
+  const signout = () => {
+    
+  }
 
 
   if (!interactive) {
@@ -102,7 +106,7 @@ const Avatar = ({ avatar, name, email, interactive = false }: AvatarProps) => {
 
           <button type="button" className="avatar-dropdown__section avatar-dropdown__action" role="menuitem">
             <IconLogout className="icon" aria-hidden="true" />
-            <span className='fh-4-sb'>Logout</span>
+            <Link to="/signin" onClick={signout} className='fh-4-sb' >Logout</Link>
           </button>
         </div>
       )}

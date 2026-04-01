@@ -40,6 +40,7 @@
 .bookmark-card__actions {
     position: relative;
     color: var(--button-text-primary);
+    background: var(--surface-panel);
 }
 
 .bookmark-card__dropdown {

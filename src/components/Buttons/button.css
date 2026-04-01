@@ -72,6 +72,24 @@ button.button--tertiary:focus {
   outline-offset: 1px;
 }
 
+button.button--active {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background: transparent;
+  border: var(--border-transparent);
+  color: var(--text-secondary);
+  border-radius: var(--br-6);
+}
+button.button--active:hover {
+  background: var(--surface-button-active-hover);
+}
+button.button--active:focus {
+  background: var(--surface-button-active-hover);
+  outline: none;
+}
+
 
 button .icon {
   width: 1em;
@@ -90,17 +108,17 @@ button.button--icon-only {
     justify-content: center;
     align-items: center;
     padding: 6px;
-    background-color: var(--surface-button-icon);
+    background-color: var(--surface-panel);
     border: 1px solid var(--border-subtle);
-    color: var(--button-text-primary);
+    color: var(--text-primary);
 }
 button.button--icon-only:hover {
-    background-color: var(--surface-button-icon-hover);
+    background-color: var(--surface-field-hover);
 }
 button.button--icon-only:focus {
-  background-color: var(--surface-button-icon);
-  border: 1px solid hsl(var(--clr-neutral-600));
-  outline: 1px solid var(--focus-outline);
+  background-color: var(--surface-panel);
+  border: 1px solid var(--button-icon-only-border);
+  outline: 2px solid var(--button-icon-only-focus-ring);
   outline-offset: 1px;
 }
 .button.button--icon-only svg {
@@ -128,4 +146,18 @@ button.button--icon-only:focus {
 
 .button.text-align-center {
   justify-content: center;
+}
+
+
+button.sort-button {
+  border: 1px solid var(--border-default);
+}
+button.sort-button:hover {
+  /* background: transparent; */
+  border: 1px solid var(--border-subtle);
+}
+button.sort-button:focus {
+  background: transparent;
+  outline: 1px solid var(--focus-outline);
+  outline-offset: 1px;
 }

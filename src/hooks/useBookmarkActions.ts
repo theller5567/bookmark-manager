@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react'
 import { createBookmark, updateBookmark } from '../api/bookmarkApi'
 import type { Bookmark, NewBookmark } from '../types/bookmark'
+import { useBookmarkModals } from '../hooks/useBookmarkModals'
 import {
   archiveBookmarkById,
   deleteBookmarkById,
