@@ -13,6 +13,7 @@ import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(bookmarkData.bookmarks)
+  localStorage.setItem('Bookmarks', JSON.stringify(bookmarks));
 
   return (
     <ThemeProvider>

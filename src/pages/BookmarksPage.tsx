@@ -136,8 +136,6 @@ const BookmarksPage = ({ mode, bookmarks, setBookmarks }: BookmarksPageProps) =>
             searchQuery={searchQuery}
             onAddBookmark={openAddBookmarkModal}
             onSearchChange={onSearchChange}
-            name={signedInUser?.fullName}
-            email={signedInUser?.email}
           />
           <main>
             <Bookmarks

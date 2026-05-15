@@ -10,16 +10,30 @@ import { Link } from 'react-router-dom'
 
 type AvatarProps = {
   avatar: string,
-  name?: string,
-  email?: string,
   interactive?: boolean
 }
 
-const Avatar = ({ avatar, name, email, interactive = false }: AvatarProps) => {
+const Avatar = ({ avatar, interactive = false }: AvatarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const { theme, setTheme } = useTheme();
   const menuId = useId();
+
+  useEffect(()=>{
+      const storedUser = localStorage.getItem('userProfile');
+      if (storedUser) {
+        try {
+          const {fullName, email} = JSON.parse(storedUser);
+          setName(fullName)
+          setEmail(email)
+        } catch {
+          // ignore invalid stored user value
+        }
+      }
+      
+  },[])
 
   useEffect(() => {
     if (!interactive || !isOpen) return;
@@ -51,7 +65,8 @@ const Avatar = ({ avatar, name, email, interactive = false }: AvatarProps) => {
   );
 
   const signout = () => {
-    
+    const user = { fullName: '', email: '' };
+    localStorage.setItem('userProfile', JSON.stringify(user));
   }
 
 

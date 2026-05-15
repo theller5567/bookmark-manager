@@ -33,6 +33,8 @@ const Signup = () => {
     if(!password || password.length < 8){
       return console.error('Please use at least 8 characters in length.')
     }
+    const user = { fullName: name, email };
+    localStorage.setItem('userProfile', JSON.stringify(user));
     navigate('/signin', { state: formData })
   }
 
